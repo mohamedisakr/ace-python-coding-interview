@@ -1,7 +1,8 @@
+import math
+
+
 def remove_even(lst):
-    lst[:] = [x for x in lst if x % 2 != 0]
-    return lst
-
-
-# my_list = [1, 2, 4, 5, 10, 6, 3]
-# print(remove_even(my_list))
+    for x in lst:
+        if not isinstance(x, (int, float)) or (isinstance(x, float) and math.isnan(x)):
+            raise TypeError("List contains invalid elements")
+    return [x for x in lst if isinstance(x, (int, float)) and x % 2 != 0]
