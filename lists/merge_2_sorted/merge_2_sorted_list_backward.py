@@ -1,12 +1,13 @@
 def merge_lists(lst1, lst2):
     m = len(lst1)
     n = len(lst2)
-    arr = [0] * (m + n)
 
     if m == 0:
         return lst2
     if n == 0:
         return lst1
+
+    arr = [0] * (m + n)
 
     i = m - 1
     j = n - 1
