@@ -1,8 +1,11 @@
+from .binary_search import binary_search
+
+
 def find_sum(lst, k):
-    seen = {}
-    for number in lst:
-        complement = k - number
-        if complement in seen:
-            return [complement, number]
-        seen[number] = True
-    return None  # Return None if no pair is found
+    lst.sort()
+    n = len(lst)
+    for i in range(n):
+        index = binary_search(lst, k-lst[i])
+        if index != -1 and index != i:
+            return [lst[i], k-lst[i]]
+    return None
