@@ -1,5 +1,5 @@
 from unittest import TestCase, main
-from .non_repeating_integer import find_first_unique
+from .non_repeating_integer_hash_table import find_first_unique
 
 
 class TestFindFirstUnique(TestCase):
