@@ -1,5 +1,5 @@
 from unittest import TestCase, main
-from .rearrange_aux_list import rearrange
+from .rearrange_in_place import rearrange
 
 
 class TestRearrangeFunction(TestCase):
