@@ -1,4 +1,6 @@
 def find_max_sum_sublist(arr):
+    if not arr:
+        return 0
     max_current = arr[0]
     max_global = arr[0]
     for item in arr[1:]:
