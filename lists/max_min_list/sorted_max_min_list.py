@@ -12,6 +12,7 @@ def max_min(arr):
     return result
 
 
+'''
 arr = [1, 2, 3, 4, 5]
 res = max_min(arr)
 print(arr)
@@ -21,25 +22,5 @@ arr1 = [1, 2, 3, 4, 5, 6, 7]
 res1 = max_min(arr1)
 print(arr1)
 print(res1)
-
-'''
-def max_min(arr):
-    n = len(arr)
-    first = 0
-    last = n-1
-    i = 0
-    res = [0]*(n)
-
-    while first < last:
-        res[i] = arr[last]
-        i += 1
-
-        res[i] = arr[first]
-        i += 1
-
-        last -= 1
-        first += 1
-
-    return res
 
 '''
