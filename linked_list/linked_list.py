@@ -15,38 +15,38 @@ class LinkedList:
 
     def insert_at_head(self, data):
         new_node = Node(data)
-
-        if self.is_empty() is True:
-            self.head = new_node
-        else:
-            new_node.next = self.head
-            self.head = new_node
-        return self.head
+        new_node.next = self.head
+        self.head = new_node
 
     def insert_at_tail(self, data):
+        # Insert a new node with given data at the end of the linked list
         new_node = Node(data)
-
-        if self.is_empty() is True:
+        if self.head is None:
             self.head = new_node
-        else:
-            first = self.head
-            while first is not None:  # .next
-                first = first.next
+            return
 
-            print(f'tail value {first.data}')
-            first.next = new_node
-            # new_node.next = None
+        last = self.head
+        while last.next:  # Otherwise, traverse the list to find the last node
+            last = last.next
+        last.next = new_node  # Make the new node the next node of the last node
+
+    def search(self, value):
+        temp = self.head
+        if temp is None:
+            return False
+
+        while temp:
+            if temp.data == value:
+                return True
+            temp = temp.next
+        return False
 
     def print_list(self):
-        if self.is_empty() is True:
-            print('linked list is empty')
-            return False
-        else:
-            first = self.head
-            while first.next is not None:
-                print(first.data, end=' -> ')
-                first = first.next
-        return True
+        temp = self.head  # Start from the head of the list
+        while temp:
+            print(temp.data, end=' -> ')  # Print the data in the current node
+            temp = temp.next  # Move to the next node
+        print('NULL')  # Ensures the output is followed by a new line
 
 
 # test
@@ -59,3 +59,12 @@ for i in range(4, 0, -1):
 
 linkList.insert_at_tail(5)
 linkList.print_list()
+
+value = 2
+print(f'search for {value} is {
+      'found' if linkList.search(value) else 'not found'}')
+
+
+value = 10
+print(f'search for {value} is {
+      'found' if linkList.search(value) else 'not found'}')
