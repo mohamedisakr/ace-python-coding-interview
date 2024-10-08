@@ -4,9 +4,23 @@ from .max_sublist_sum import find_max_sum_sublist
 
 
 class TestMaxSubarraySum(TestCase):
+    # ----- my first 2 test cases ----
+    def test_case_1(self):
+        self.assertEqual(find_max_sum_sublist(
+            [-2, -3, 4, -1, -2, 1, 5, -3]), 7)
+
+    def test_case_2(self):
+        self.assertEqual(find_max_sum_sublist(
+            [-4, 2, -5, 1, 2, 3, 6, -5, 1]), 12)
+    # ------------------------------------
+
     def test_single_element(self):
         self.assertEqual(find_max_sum_sublist([5]), 5)
+
+    def test_single_element_1(self):
         self.assertEqual(find_max_sum_sublist([-5]), -5)
+
+    def test_single_element_2(self):
         self.assertEqual(find_max_sum_sublist([0]), 0)
 
     def test_all_positive(self):
