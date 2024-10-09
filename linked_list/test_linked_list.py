@@ -1,4 +1,5 @@
 from unittest import TestCase, main
+from .node import Node
 from .linked_list import LinkedList
 
 
@@ -197,6 +198,48 @@ class TestLinkedList(TestCase):
         self.assertEqual(self.ll.get_head().data, 10)
         self.assertEqual(self.ll.get_head().next.data, 20)
         self.assertEqual(self.ll.get_head().next.next.data, 30)
+
+    # ------- detect loop (cycle) ----------
+    def test_detect_loop_empty_list(self):
+        self.assertFalse(self.ll.detect_loop())
+
+    def test_detect_loop_single_element_no_loop(self):
+        self.ll.insert_at_head(10)
+        self.assertFalse(self.ll.detect_loop())
+
+    def test_detect_loop_single_element_with_loop(self):
+        node = Node(10)
+        self.ll.head = node
+        node.next = node  # Creating a loop
+        self.assertTrue(self.ll.detect_loop())
+
+    def test_detect_loop_multiple_elements_no_loop(self):
+        self.ll.insert_at_head(10)
+        self.ll.insert_at_tail(20)
+        self.ll.insert_at_tail(30)
+        self.assertFalse(self.ll.detect_loop())
+
+    def test_detect_loop_multiple_elements_with_loop_at_end(self):
+        node1 = Node(10)
+        node2 = Node(20)
+        node3 = Node(30)
+        self.ll.head = node1
+        node1.next = node2
+        node2.next = node3
+        node3.next = node1  # Creating a loop
+        self.assertTrue(self.ll.detect_loop())
+
+    def test_detect_loop_multiple_elements_with_loop_in_middle(self):
+        node1 = Node(10)
+        node2 = Node(20)
+        node3 = Node(30)
+        node4 = Node(40)
+        self.ll.head = node1
+        node1.next = node2
+        node2.next = node3
+        node3.next = node4
+        node4.next = node2  # Creating a loop
+        self.assertTrue(self.ll.detect_loop())
 
     # def test_print_list(self):
     #     self.ll.insert_at_head(10)

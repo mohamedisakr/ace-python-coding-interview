@@ -77,6 +77,7 @@ class LinkedList:
         self.head = previous
 
     def detect_loop(self) -> bool:
+        # Floyd's cycle-finding (tortoise and hare) algorithm
         # Initialize two pointers, slow and fast
         slow, fast = self.head, self.head
 
