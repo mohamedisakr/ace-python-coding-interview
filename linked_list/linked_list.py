@@ -64,6 +64,18 @@ class LinkedList:
             current = current.next
         return count
 
+    def reverse(self):
+        previous = None
+        current = self.head
+
+        while current:
+            next = current.next
+            current.next = previous
+            previous = current
+            current = next
+
+        self.head = previous
+
     def print_list(self):
         current = self.head
         while current:
