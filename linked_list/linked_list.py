@@ -9,9 +9,10 @@ class LinkedList:
         return self.head
 
     def is_empty(self):
-        if self.head is None:
-            return True
-        return False
+        # if self.head is None:
+        #     return True
+        # return False
+        return self.head is None
 
     def insert_at_head(self, data):
         new_node = Node(data)
@@ -31,22 +32,34 @@ class LinkedList:
         last.next = new_node  # Make the new node the next node of the last node
 
     def search(self, value):
-        temp = self.head
-        if temp is None:
-            return False
-
-        while temp:
-            if temp.data == value:
+        current = self.head
+        while current:
+            if current.data == value:
                 return True
-            temp = temp.next
+            current = current.next
+        return False
+
+    def delete(self, value):
+        current = self.head
+        previous = None
+
+        while current:
+            if current.data == value:
+                if previous:
+                    previous.next = current.next
+                else:
+                    self.head = current.next
+                return True
+            previous = current
+            current = current.next
         return False
 
     def print_list(self):
-        temp = self.head  # Start from the head of the list
-        while temp:
-            print(temp.data, end=' -> ')  # Print the data in the current node
-            temp = temp.next  # Move to the next node
-        print('NULL')  # Ensures the output is followed by a new line
+        current = self.head
+        while current:
+            print(current.data, end=' -> ')
+            current = current.next
+        print('NULL')
 
 
 # test
@@ -68,3 +81,6 @@ print(f'search for {value} is {
 value = 10
 print(f'search for {value} is {
       'found' if linkList.search(value) else 'not found'}')
+
+# delete value
+value_to_delete = 4
