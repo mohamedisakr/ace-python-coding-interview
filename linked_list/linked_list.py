@@ -93,6 +93,15 @@ class LinkedList:
         # If no loop is found
         return False
 
+    def find_mid(self) -> int:
+        slow, fast = self.head, self.head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        return slow.data
+
     def print_list(self):
         current = self.head
         while current:
