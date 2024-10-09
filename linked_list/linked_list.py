@@ -94,6 +94,9 @@ class LinkedList:
         return False
 
     def find_mid(self) -> int:
+        if self.head is None:
+            return None
+
         slow, fast = self.head, self.head
 
         while fast and fast.next:
