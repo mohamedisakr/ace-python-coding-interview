@@ -1,4 +1,4 @@
-from node import Node
+from .node import Node
 
 
 class LinkedList:
@@ -54,6 +54,16 @@ class LinkedList:
             current = current.next
         return False
 
+    def length(self):
+        if self.head is None:
+            return 0
+        count = 0
+        current = self.head
+        while current:
+            count += 1
+            current = current.next
+        return count
+
     def print_list(self):
         current = self.head
         while current:
@@ -62,6 +72,7 @@ class LinkedList:
         print('NULL')
 
 
+'''
 # test
 linkList = LinkedList()
 # print(linkList.is_empty())
@@ -84,3 +95,4 @@ print(f'search for {value} is {
 
 # delete value
 value_to_delete = 4
+'''
