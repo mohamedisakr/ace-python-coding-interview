@@ -76,6 +76,22 @@ class LinkedList:
 
         self.head = previous
 
+    def detect_loop(self) -> bool:
+        # Initialize two pointers, slow and fast
+        slow, fast = self.head, self.head
+
+        # Traverse the list with two pointers
+        while fast and fast.next:
+            slow = slow.next          # Move slow pointer by one step
+            fast = fast.next.next     # Move fast pointer by two steps
+
+            # Check if the two pointers meet
+            if slow == fast:
+                return True
+
+        # If no loop is found
+        return False
+
     def print_list(self):
         current = self.head
         while current:
