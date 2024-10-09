@@ -148,6 +148,56 @@ class TestLinkedList(TestCase):
         self.ll.delete(10)
         self.assertEqual(self.ll.length(), 0)
 
+    # --------- reverse ------
+    def test_reverse_empty_list(self):
+        self.ll.reverse()
+        self.assertTrue(self.ll.is_empty())
+
+    def test_reverse_single_element(self):
+        self.ll.insert_at_head(10)
+        self.ll.reverse()
+        self.assertEqual(self.ll.get_head().data, 10)
+
+    def test_reverse_two_elements(self):
+        self.ll.insert_at_head(10)
+        self.ll.insert_at_tail(20)
+        self.ll.reverse()
+        self.assertEqual(self.ll.get_head().data, 20)
+        self.assertEqual(self.ll.get_head().next.data, 10)
+
+    def test_reverse_multiple_elements(self):
+        self.ll.insert_at_head(10)
+        self.ll.insert_at_tail(20)
+        self.ll.insert_at_tail(30)
+        self.ll.reverse()
+        self.assertEqual(self.ll.get_head().data, 30)
+        self.assertEqual(self.ll.get_head().next.data, 20)
+        self.assertEqual(self.ll.get_head().next.next.data, 10)
+
+    def test_reverse_after_insert_at_head(self):
+        self.ll.insert_at_head(10)
+        self.ll.insert_at_head(20)
+        self.ll.reverse()
+        self.assertEqual(self.ll.get_head().data, 10)
+        self.assertEqual(self.ll.get_head().next.data, 20)
+
+    def test_reverse_after_insert_at_tail(self):
+        self.ll.insert_at_tail(10)
+        self.ll.insert_at_tail(20)
+        self.ll.reverse()
+        self.assertEqual(self.ll.get_head().data, 20)
+        self.assertEqual(self.ll.get_head().next.data, 10)
+
+    def test_reverse_twice(self):
+        self.ll.insert_at_head(10)
+        self.ll.insert_at_tail(20)
+        self.ll.insert_at_tail(30)
+        self.ll.reverse()
+        self.ll.reverse()
+        self.assertEqual(self.ll.get_head().data, 10)
+        self.assertEqual(self.ll.get_head().next.data, 20)
+        self.assertEqual(self.ll.get_head().next.next.data, 30)
+
     # def test_print_list(self):
     #     self.ll.insert_at_head(10)
     #     self.ll.insert_at_tail(20)
