@@ -113,6 +113,26 @@ class LinkedList:
                 previous = current
             current = current.next
 
+    def intersection(self, other):
+        intersec = set()
+        result = []
+
+        current = self.head
+        while current:
+            intersec.add(current.data)
+            current = current.next
+
+        current = other.head
+        while current:
+            if current.data in intersec:
+                result.append(current.data)
+            current = current.next
+
+        return result
+
+    def union(self, other):
+        pass
+
     def print_list(self):
         current = self.head
         while current:
