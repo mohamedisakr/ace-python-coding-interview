@@ -133,6 +133,9 @@ class LinkedList:
         return result
 
     def union(self, other):
+        if self.head is None and other.head is None:
+            return []
+
         union_set = set()
 
         current = self.head
@@ -145,7 +148,7 @@ class LinkedList:
             union_set.add(current.data)
             current = current.next
 
-        return union_set
+        return list(union_set)
 
     def print_list(self):
         current = self.head

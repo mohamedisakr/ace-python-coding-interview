@@ -439,11 +439,63 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual((self.ll1.intersection(self.ll2)), [2])
         self.assertEqual((self.ll2.intersection(self.ll1)), [2])
 
+    # ------ union ------
 
-    # def test_print_list(self):
-    #     self.ll.insert_at_head(10)
-    #     self.ll.insert_at_tail(20)
-    #     self.ll.insert_at_tail(30)
-    #     self.ll.print_list()  # Expected output: 10 -> 20 -> 30 -> NULL
+    def test_empty_lists_union(self):
+        # Boundary case: Both lists are empty
+        self.assertEqual(self.ll1.union(self.ll2), [])
+
+    def test_one_empty_list_union(self):
+        # Boundary case: One list is empty
+        self.ll1.insert_at_head(1)
+        self.assertEqual(sorted(self.ll1.union(self.ll2)), [1])
+        self.assertEqual(sorted(self.ll2.union(self.ll1)), [1])
+
+    def test_no_union(self):
+        # Case: No intersection between lists
+        self.ll1.insert_at_head(1)
+        self.ll2.insert_at_head(2)
+        self.assertEqual(sorted(self.ll1.union(self.ll2)), [1, 2])
+        self.assertEqual(sorted(self.ll2.union(self.ll1)), [1, 2])
+
+    def test_one_element_union(self):
+        # Case: One element in common
+        self.ll1.insert_at_head(1)
+        self.ll2.insert_at_head(1)
+        self.assertEqual(self.ll1.union(self.ll2), [1])
+        self.assertEqual(self.ll2.union(self.ll1), [1])
+
+    def test_multiple_elements_union(self):
+        # Case: Multiple elements in common
+        self.ll1.insert_at_head(3)
+        self.ll1.insert_at_head(2)
+        self.ll1.insert_at_head(1)
+        self.ll2.insert_at_head(3)
+        self.ll2.insert_at_head(4)
+        self.ll2.insert_at_head(1)
+        self.assertEqual(sorted(self.ll1.union(self.ll2)), [1, 2, 3, 4])
+        self.assertEqual(sorted(self.ll2.union(self.ll1)), [1, 2, 3, 4])
+
+    def test_all_elements_union(self):
+        # Edge case: All elements are common
+        self.ll1.insert_at_head(1)
+        self.ll1.insert_at_head(2)
+        self.ll2.insert_at_head(2)
+        self.ll2.insert_at_head(1)
+        self.assertEqual(sorted(self.ll1.union(self.ll2)), [1, 2])
+        self.assertEqual(sorted(self.ll2.union(self.ll1)), [1, 2])
+
+    def test_duplicates_in_list_union(self):
+        # Edge case: Lists contain duplicates
+        self.ll1.insert_at_head(1)
+        self.ll1.insert_at_head(2)
+        self.ll1.insert_at_head(2)
+        self.ll2.insert_at_head(2)
+        self.ll2.insert_at_head(2)
+        self.ll2.insert_at_head(3)
+        self.assertEqual(sorted(self.ll1.union(self.ll2)), [1, 2, 3])
+        self.assertEqual(sorted(self.ll2.union(self.ll1)), [1, 2, 3])
+
+
 if __name__ == '__main__':
     unittest.main()
