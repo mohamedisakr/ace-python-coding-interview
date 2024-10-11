@@ -4,31 +4,32 @@ from .node import Node
 class LinkedList:
     def __init__(self):
         self.head = None
+        self.count = 0
 
     def get_head(self):
         return self.head
 
     def is_empty(self):
-        # if self.head is None:
-        #     return True
-        # return False
         return self.head is None
 
     def insert_at_head(self, data):
         new_node = Node(data)
         new_node.next = self.head
         self.head = new_node
+        self.count += 1
 
     def insert_at_tail(self, data):
         # Insert a new node with given data at the end of the linked list
         new_node = Node(data)
         if self.head is None:
             self.head = new_node
+            self.count += 1
             return
 
         last = self.head
         while last.next:  # Otherwise, traverse the list to find the last node
             last = last.next
+        self.count += 1
         last.next = new_node  # Make the new node the next node of the last node
 
     def search(self, value):
@@ -49,30 +50,24 @@ class LinkedList:
                     previous.next = current.next
                 else:
                     self.head = current.next
+                self.count -= 1
                 return True
             previous = current
             current = current.next
         return False
 
     def length(self):
-        if self.head is None:
-            return 0
-        count = 0
-        current = self.head
-        while current:
-            count += 1
-            current = current.next
-        return count
+        return self.count
 
     def reverse(self):
         previous = None
         current = self.head
 
         while current:
-            next = current.next
+            next_node = current.next
             current.next = previous
             previous = current
-            current = next
+            current = next_node
 
         self.head = previous
 
@@ -104,6 +99,19 @@ class LinkedList:
             fast = fast.next.next
 
         return slow.data
+
+    def remove_duplicates(self):
+        visited_map = {}
+        current = self.head
+        previous = None
+
+        while current:
+            if current.data in visited_map:
+                previous.next = current.next
+            else:
+                visited_map[current.data] = True
+                previous = current
+            current = current.next
 
     def print_list(self):
         current = self.head

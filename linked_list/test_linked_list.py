@@ -250,17 +250,17 @@ class TestLinkedList(unittest.TestCase):
         self.ll.insert_at_head(10)
         self.assertEqual(self.ll.find_mid(), 10)
 
-    @unittest.skip('postponed')
-    def test_find_mid_two_elements(self):
-        self.ll.insert_at_head(10)
-        self.ll.insert_at_tail(20)
-        self.assertEqual(self.ll.find_mid(), 10)
-
     def test_find_mid_odd_number_of_elements(self):
         self.ll.insert_at_head(10)
         self.ll.insert_at_tail(20)
         self.ll.insert_at_tail(30)
         self.assertEqual(self.ll.find_mid(), 20)
+
+    @unittest.skip('postponed')
+    def test_find_mid_two_elements(self):
+        self.ll.insert_at_head(10)
+        self.ll.insert_at_tail(20)
+        self.assertEqual(self.ll.find_mid(), 10)
 
     @unittest.skip('postponed')
     def test_find_mid_even_number_of_elements(self):
@@ -275,7 +275,51 @@ class TestLinkedList(unittest.TestCase):
             self.ll.insert_at_tail(i)
         self.assertEqual(self.ll.find_mid(), 501)
 
-    # ------- middle node adjusted test cases
+    # ------- after code optimization --------
+
+    def test_is_empty(self):
+        self.assertTrue(self.ll.is_empty())
+        self.ll.insert_at_head(1)
+        self.assertFalse(self.ll.is_empty())
+
+    def test_insert_at_head(self):
+        self.ll.insert_at_head(1)
+        self.ll.insert_at_head(2)
+        self.assertEqual(self.ll.head.data, 2)
+        self.assertEqual(self.ll.head.next.data, 1)
+
+    @unittest.skip('postponed')
+    def test_insert_at_tail(self):
+        self.ll.insert_at_tail(1)
+        self.ll.insert_at_tail(2)
+        self.assertEqual(self.ll.tail.data, 2)
+        self.assertEqual(self.ll.head.next.data, 2)
+
+    def test_search(self):
+        self.ll.insert_at_head(1)
+        self.assertTrue(self.ll.search(1))
+        self.assertFalse(self.ll.search(2))
+
+    def test_delete(self):
+        self.ll.insert_at_head(1)
+        self.ll.insert_at_head(2)
+        self.assertTrue(self.ll.delete(1))
+        self.assertFalse(self.ll.search(1))
+        self.assertFalse(self.ll.delete(3))
+
+    def test_length(self):
+        self.assertEqual(self.ll.length(), 0)
+        self.ll.insert_at_head(1)
+        self.assertEqual(self.ll.length(), 1)
+        self.ll.insert_at_tail(2)
+        self.assertEqual(self.ll.length(), 2)
+
+    def test_reverse(self):
+        self.ll.insert_at_head(1)
+        self.ll.insert_at_head(2)
+        self.ll.reverse()
+        self.assertEqual(self.ll.head.data, 1)
+        self.assertEqual(self.ll.head.next.data, 2)
 
 
     # def test_print_list(self):
