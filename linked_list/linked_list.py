@@ -150,6 +150,24 @@ class LinkedList:
 
         return list(union_set)
 
+    def find_nth(self, n):
+        if self.head is None:
+            return -1
+
+        first = self.head
+        second = self.head
+
+        for _ in range(n):
+            if first is None:
+                return -1
+            first = first.next
+
+        while first is not None:
+            first = first.next
+            second = second.next
+
+        return second.data if second is not None else -1
+
     def print_list(self):
         current = self.head
         while current:
