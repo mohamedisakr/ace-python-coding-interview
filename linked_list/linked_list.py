@@ -133,7 +133,19 @@ class LinkedList:
         return result
 
     def union(self, other):
-        pass
+        union_set = set()
+
+        current = self.head
+        while current:
+            union_set.add(current.data)
+            current = current.next
+
+        current = other.head
+        while current:
+            union_set.add(current.data)
+            current = current.next
+
+        return union_set
 
     def print_list(self):
         current = self.head
