@@ -123,9 +123,11 @@ class LinkedList:
             current = current.next
 
         current = other.head
+        seen = set()
         while current:
-            if current.data in intersec:
+            if current.data in intersec and current.data not in seen:
                 result.append(current.data)
+                seen.add(current.data)
             current = current.next
 
         return result

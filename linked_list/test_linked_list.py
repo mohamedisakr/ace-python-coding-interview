@@ -8,6 +8,8 @@ class TestLinkedList(unittest.TestCase):
 
     def setUp(self):
         self.ll = LinkedList()
+        self.ll1 = LinkedList()
+        self.ll2 = LinkedList()
 
     def test_is_empty_on_empty_list(self):
         self.assertTrue(self.ll.is_empty())
@@ -378,6 +380,64 @@ class TestLinkedList(unittest.TestCase):
         self.ll.remove_duplicates()
         self.assertEqual(self.ll.head.data, 1)
         self.assertIsNone(self.ll.head.next)
+
+    # ------------ intersection -----------
+    def test_empty_lists(self):
+        # Boundary case: Both lists are empty
+        self.assertEqual(self.ll1.intersection(self.ll2), [])
+
+    def test_one_empty_list(self):
+        # Boundary case: One list is empty
+        self.ll1.insert_at_head(1)
+        self.assertEqual(self.ll1.intersection(self.ll2), [])
+        self.assertEqual(self.ll2.intersection(self.ll1), [])
+
+    def test_no_intersection(self):
+        # Case: No intersection between lists
+        self.ll1.insert_at_head(1)
+        self.ll2.insert_at_head(2)
+        self.assertEqual(self.ll1.intersection(self.ll2), [])
+        self.assertEqual(self.ll2.intersection(self.ll1), [])
+
+    def test_one_element_intersection(self):
+        # Case: One element in common
+        self.ll1.insert_at_head(1)
+        self.ll2.insert_at_head(1)
+        self.assertEqual(self.ll1.intersection(self.ll2), [1])
+        self.assertEqual(self.ll2.intersection(self.ll1), [1])
+
+    def test_multiple_elements_intersection(self):
+        # Case: Multiple elements in common
+        self.ll1.insert_at_head(3)
+        self.ll1.insert_at_head(2)
+        self.ll1.insert_at_head(1)
+        self.ll2.insert_at_head(3)
+        self.ll2.insert_at_head(4)
+        self.ll2.insert_at_head(1)
+        self.assertEqual(sorted(self.ll1.intersection(self.ll2)), [1, 3])
+        self.assertEqual(sorted(self.ll2.intersection(self.ll1)), [1, 3])
+
+    def test_all_elements_intersection(self):
+        # Edge case: All elements are common
+        self.ll1.insert_at_head(1)
+        self.ll1.insert_at_head(2)
+        self.ll2.insert_at_head(2)
+        self.ll2.insert_at_head(1)
+        self.assertEqual(sorted(self.ll1.intersection(self.ll2)), [1, 2])
+        self.assertEqual(sorted(self.ll2.intersection(self.ll1)), [1, 2])
+
+    def test_duplicates_in_list(self):
+        # Edge case: Lists contain duplicates
+        self.ll1.insert_at_head(1)
+        self.ll1.insert_at_head(2)
+        self.ll1.insert_at_head(2)
+        self.ll2.insert_at_head(2)
+        self.ll2.insert_at_head(2)
+        self.ll2.insert_at_head(3)
+        # self.assertEqual(sorted(self.ll1.intersection(self.ll2)), [2])
+        # self.assertEqual(sorted(self.ll2.intersection(self.ll1)), [2])
+        self.assertEqual((self.ll1.intersection(self.ll2)), [2])
+        self.assertEqual((self.ll2.intersection(self.ll1)), [2])
 
 
     # def test_print_list(self):
