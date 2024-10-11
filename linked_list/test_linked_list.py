@@ -321,6 +321,64 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(self.ll.head.data, 1)
         self.assertEqual(self.ll.head.next.data, 2)
 
+    # ------ remove duplicate --------
+    def test_remove_duplicates_empty_list(self):
+        # Boundary case: empty list
+        self.ll.remove_duplicates()
+        self.assertIsNone(self.ll.head)
+
+    def test_remove_duplicates_single_node(self):
+        # Boundary case: single node
+        self.ll.insert_at_head(1)
+        self.ll.remove_duplicates()
+        self.assertEqual(self.ll.head.data, 1)
+        self.assertIsNone(self.ll.head.next)
+
+    def test_remove_duplicates_no_duplicates(self):
+        # Case: no duplicates
+        self.ll.insert_at_head(1)
+        self.ll.insert_at_head(2)
+        self.ll.insert_at_head(3)
+        self.ll.remove_duplicates()
+        self.assertEqual(self.ll.head.data, 3)
+        self.assertEqual(self.ll.head.next.data, 2)
+        self.assertEqual(self.ll.head.next.next.data, 1)
+        self.assertIsNone(self.ll.head.next.next.next)
+
+    def test_remove_duplicates_with_duplicates(self):
+        # Case: list with duplicates
+        self.ll.insert_at_head(1)
+        self.ll.insert_at_head(2)
+        self.ll.insert_at_head(2)
+        self.ll.insert_at_head(3)
+        self.ll.remove_duplicates()
+        self.assertEqual(self.ll.head.data, 3)
+        self.assertEqual(self.ll.head.next.data, 2)
+        self.assertEqual(self.ll.head.next.next.data, 1)
+        self.assertIsNone(self.ll.head.next.next.next)
+
+    def test_remove_duplicates_multiple_duplicates(self):
+        # Edge case: multiple duplicates
+        self.ll.insert_at_head(1)
+        self.ll.insert_at_head(2)
+        self.ll.insert_at_head(2)
+        self.ll.insert_at_head(3)
+        self.ll.insert_at_head(3)
+        self.ll.remove_duplicates()
+        self.assertEqual(self.ll.head.data, 3)
+        self.assertEqual(self.ll.head.next.data, 2)
+        self.assertEqual(self.ll.head.next.next.data, 1)
+        self.assertIsNone(self.ll.head.next.next.next)
+
+    def test_remove_duplicates_all_nodes_same(self):
+        # Edge case: all nodes the same
+        self.ll.insert_at_head(1)
+        self.ll.insert_at_head(1)
+        self.ll.insert_at_head(1)
+        self.ll.remove_duplicates()
+        self.assertEqual(self.ll.head.data, 1)
+        self.assertIsNone(self.ll.head.next)
+
 
     # def test_print_list(self):
     #     self.ll.insert_at_head(10)
