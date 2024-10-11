@@ -496,6 +496,58 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(sorted(self.ll1.union(self.ll2)), [1, 2, 3])
         self.assertEqual(sorted(self.ll2.union(self.ll1)), [1, 2, 3])
 
+    # ---------------- find nth ----------------
+    def test_empty_list(self):
+        self.assertEqual(self.ll.find_nth(1), -1)
+
+    def test_single_node_list(self):
+        self.ll.insert_at_tail(10)
+        self.assertEqual(self.ll.find_nth(1), 10)
+        self.assertEqual(self.ll.find_nth(2), -1)
+
+    def test_two_node_list(self):
+        self.ll.insert_at_tail(20)
+        self.ll.insert_at_tail(30)
+        self.assertEqual(self.ll.find_nth(1), 30)
+        self.assertEqual(self.ll.find_nth(2), 20)
+        self.assertEqual(self.ll.find_nth(3), -1)
+
+    def test_n_greater_than_list_length(self):
+        self.ll.insert_at_tail(40)
+        self.ll.insert_at_tail(50)
+        self.ll.insert_at_tail(60)
+        self.assertEqual(self.ll.find_nth(4), -1)
+
+    def test_n_equals_list_length(self):
+        self.ll.insert_at_tail(70)
+        self.ll.insert_at_tail(80)
+        self.ll.insert_at_tail(90)
+        self.assertEqual(self.ll.find_nth(3), 70)
+
+    def test_middle_of_the_list(self):
+        self.ll.insert_at_tail(100)
+        self.ll.insert_at_tail(110)
+        self.ll.insert_at_tail(120)
+        self.assertEqual(self.ll.find_nth(2), 110)
+
+    def test_end_of_the_list(self):
+        self.ll.insert_at_tail(130)
+        self.ll.insert_at_tail(140)
+        self.ll.insert_at_tail(150)
+        self.assertEqual(self.ll.find_nth(1), 150)
+
+    def test_list_with_duplicates(self):
+        self.ll.insert_at_tail(160)
+        self.ll.insert_at_tail(170)
+        self.ll.insert_at_tail(170)
+        self.ll.insert_at_tail(180)
+        self.assertEqual(self.ll.find_nth(3), 170)
+
+    def test_negative_n(self):
+        self.ll.insert_at_tail(190)
+        self.ll.insert_at_tail(200)
+        self.assertEqual(self.ll.find_nth(-1), -1)
+
 
 if __name__ == '__main__':
     unittest.main()
