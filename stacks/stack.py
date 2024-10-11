@@ -1,20 +1,17 @@
 class MyStack:
     def __init__(self):
         self.stack_list = []
-        self.stack_size = 0
 
     def is_empty(self) -> bool:
-        return self.stack_size == 0
+        return len(self.stack_list) == 0
 
     def push(self, value):
         self.stack_list.append(value)
-        self.stack_size += 1
 
     def pop(self):
         if self.is_empty():
             return None
         self.stack_list.pop()
-        self.stack_size -= 1
 
     def peek(self):
         if self.is_empty():
@@ -22,7 +19,7 @@ class MyStack:
         return self.stack_list[-1]
 
     def capacity(self) -> int:
-        return self.stack_size
+        return len(self.stack_list)
 
 
 if __name__ == "__main__":
