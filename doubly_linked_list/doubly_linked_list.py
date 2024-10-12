@@ -7,11 +7,27 @@ class DoublyLinkedList:
         self.tail = None
         self.count = 0
 
-    def get_head(self) -> Node:
-        return self.head
+    def insert_at_tail(self, value):
+        new_node = Node(value)
+        if not self.head:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.next = new_node
+            new_node.prev = self.tail
+            self.tail = new_node
+        self.count += 1
 
-    def is_empty(self) -> bool:
-        return self.head is None
+    def insert_at_head(self, value):
+        new_node = Node(value)
+        if not self.head:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node.next = self.head
+            self.head.prev = new_node
+            self.head = new_node
+        self.count += 1
 
 
 '''
