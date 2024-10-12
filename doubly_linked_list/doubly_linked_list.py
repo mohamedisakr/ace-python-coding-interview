@@ -29,10 +29,28 @@ class DoublyLinkedList:
             self.head = new_node
         self.count += 1
 
+    def delete(self, value):
+        if self.head is None:
+            return
+
+        current = self.head
+
+        while current:
+            if current.data == value:
+                if current.prev:  # If not the head node
+                    current.prev.next = current.next
+                if current.next:  # If not the tail node
+                    current.next.prev = current.prev
+                if current == self.head:  # If it is the head node
+                    self.head = current.next
+                if current == self.tail:  # If it is the tail node
+                    self.tail = current.prev
+                self.count -= 1
+                return
+            current = current.next
+
 
 '''
-insert_at_tail(data) - inserts an element at the end of the linked list
-insert_at_head(data) - inserts an element at the start/head of the linked list
 delete(data) - deletes an element with your specified value from the linked list
 delete_at_head() - deletes the first element of the list
 search(data) - searches for an element with the specified value in the linked list
