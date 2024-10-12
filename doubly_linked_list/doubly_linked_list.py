@@ -59,6 +59,7 @@ class DoublyLinkedList:
                 self.count -= 1
                 return
             current = current.next
+        self.count -= 1
 
     def search(self, value):
         current = self.head
