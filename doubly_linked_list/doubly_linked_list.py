@@ -76,3 +76,8 @@ class DoublyLinkedList:
 
     def length(self) -> int:
         return self.count
+
+    def clear(self):
+        self.head = None
+        self.tail = None
+        self.count = 0

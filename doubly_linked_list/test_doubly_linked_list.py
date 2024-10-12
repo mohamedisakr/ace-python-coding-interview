@@ -6,6 +6,14 @@ class TestDoublyLinkedList(unittest.TestCase):
     def setUp(self):
         self.dll = DoublyLinkedList()
 
+        self.empty_list = DoublyLinkedList()
+        self.single_item_list = DoublyLinkedList()
+        self.single_item_list.insert_at_tail(10)
+        self.multi_item_list = DoublyLinkedList()
+        self.multi_item_list.insert_at_tail(20)
+        self.multi_item_list.insert_at_tail(30)
+        self.multi_item_list.insert_at_tail(40)
+
     # ----- insert tail ------
     def test_empty_list(self):
         # Insert into an empty list
@@ -199,6 +207,35 @@ class TestDoublyLinkedList(unittest.TestCase):
         self.dll.delete_at_head()
         self.assertIsNone(self.dll.head)
         self.assertIsNone(self.dll.tail)
+
+    # ----- get head -------
+
+    def test_get_head_empty_list(self):
+        self.assertIsNone(self.empty_list.get_head(),
+                          "Head of an empty list should be None.")
+
+    def test_get_head_single_item_list(self):
+        self.assertEqual(self.single_item_list.get_head(
+        ).data, 10, "Head of a single item list should be the first item inserted.")
+
+    def test_get_head_multi_item_list(self):
+        self.assertEqual(self.multi_item_list.get_head(
+        ).data, 20, "Head of a multi-item list should be the first item inserted.")
+
+    def test_get_head_after_insertion(self):
+        self.single_item_list.insert_at_tail(20)
+        self.assertEqual(self.single_item_list.get_head().data,
+                         10, "Head should not change after insertion at the end.")
+
+    def test_get_head_after_deletion(self):
+        self.single_item_list.delete_at_head()
+        self.assertIsNone(self.single_item_list.get_head(
+        ), "Head of list should be None after deleting the only item.")
+
+    def test_get_head_after_clearing_list(self):
+        self.multi_item_list.clear()
+        self.assertIsNone(self.multi_item_list.get_head(),
+                          "Head should be None after clearing the list.")
 
 
 if __name__ == '__main__':
