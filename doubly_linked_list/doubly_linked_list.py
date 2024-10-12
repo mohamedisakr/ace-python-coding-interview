@@ -7,6 +7,12 @@ class DoublyLinkedList:
         self.tail = None
         self.count = 0
 
+    def get_head(self):
+        return self.head
+
+    def get_tail(self):
+        return self.tail
+
     def insert_at_tail(self, value):
         new_node = Node(value)
         if not self.head:
