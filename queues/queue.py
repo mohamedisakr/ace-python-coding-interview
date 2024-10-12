@@ -9,9 +9,22 @@ class MyQueue:
         return self.items.length() == 0
 
     def front(self):
-        if self.is_empty():
-            return None
-        return self.items
+        return self.items.get_head() if not self.is_empty() else None
+
+    def rear(self):
+        return self.items.get_tail() if not self.is_empty() else None
+
+    def size(self):
+        return self.items.length()
+
+    def enqueue(self, value):
+        self.items.insert_at_tail(value)
+
+    def dequeue(self):
+        self.items.delete_at_head()
+
+    def print_list(self):
+        print(self.items)
 
 
 queue_obj = MyQueue()
