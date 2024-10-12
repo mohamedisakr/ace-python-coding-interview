@@ -60,8 +60,10 @@ class DoublyLinkedList:
                 return
             current = current.next
 
-
-'''
-delete_at_head() - deletes the first element of the list
-search(data) - searches for an element with the specified value in the linked list
-'''
+    def search(self, value):
+        current = self.head
+        while current:
+            if current.data == value:
+                return True
+            current = current.next
+        return False
