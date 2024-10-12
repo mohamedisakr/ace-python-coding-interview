@@ -81,3 +81,11 @@ class DoublyLinkedList:
         self.head = None
         self.tail = None
         self.count = 0
+
+    def __str__(self):
+        values = []
+        current = self.head
+        while current:
+            values.append(str(current.value))
+            current = current.next
+        return " -> ".join(values)

@@ -24,7 +24,8 @@ class MyQueue:
         self.items.delete_at_head()
 
     def print_list(self):
-        print(self.items)
+        # print(self.items)
+        return str(self.items)
 
 
 queue_obj = MyQueue()
