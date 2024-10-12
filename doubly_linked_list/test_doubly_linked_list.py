@@ -150,6 +150,56 @@ class TestDoublyLinkedList(unittest.TestCase):
         self.assertEqual(self.dll.tail.data, 30)
         self.assertEqual(self.dll.count, 3)
 
+    # ---------- delete head -----------
+
+    def test_empty_list_delete_at_head(self):
+        # Delete from an empty list
+        self.dll.delete_at_head()
+        self.assertIsNone(self.dll.head)
+        self.assertIsNone(self.dll.tail)
+
+    def test_single_node_list_delete_at_head(self):
+        # Delete the only node in the list
+        self.dll.insert_at_tail(10)
+        self.dll.delete_at_head()
+        self.assertIsNone(self.dll.head)
+        self.assertIsNone(self.dll.tail)
+
+    def test_multiple_node_list_delete_at_head(self):
+        # Delete the head node in a list with multiple nodes
+        self.dll.insert_at_tail(10)
+        self.dll.insert_at_tail(20)
+        self.dll.insert_at_tail(30)
+        self.dll.delete_at_head()
+        self.assertEqual(self.dll.head.data, 20)
+        self.assertIsNone(self.dll.head.prev)
+        self.assertEqual(self.dll.head.next.data, 30)
+        self.assertEqual(self.dll.tail.data, 30)
+        self.assertEqual(self.dll.tail.prev.data, 20)
+
+    def test_consecutive_deletes(self):
+        # Consecutively delete head nodes
+        self.dll.insert_at_tail(10)
+        self.dll.insert_at_tail(20)
+        self.dll.insert_at_tail(30)
+        self.dll.insert_at_tail(40)
+
+        self.dll.delete_at_head()
+        self.assertEqual(self.dll.head.data, 20)
+        self.assertEqual(self.dll.tail.data, 40)
+
+        self.dll.delete_at_head()
+        self.assertEqual(self.dll.head.data, 30)
+        self.assertEqual(self.dll.tail.data, 40)
+
+        self.dll.delete_at_head()
+        self.assertEqual(self.dll.head.data, 40)
+        self.assertEqual(self.dll.tail.data, 40)
+
+        self.dll.delete_at_head()
+        self.assertIsNone(self.dll.head)
+        self.assertIsNone(self.dll.tail)
+
 
 if __name__ == '__main__':
     unittest.main()
