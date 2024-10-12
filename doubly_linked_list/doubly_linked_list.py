@@ -29,6 +29,17 @@ class DoublyLinkedList:
             self.head = new_node
         self.count += 1
 
+    def delete_at_head(self):
+        if self.head is None:  # Empty list
+            return
+        if self.head == self.tail:  # Only one element in the list
+            self.head = None
+            self.tail = None
+        else:
+            self.head = self.head.next
+            self.head.prev = None
+        self.count -= 1
+
     def delete(self, value):
         if self.head is None:
             return
@@ -51,7 +62,6 @@ class DoublyLinkedList:
 
 
 '''
-delete(data) - deletes an element with your specified value from the linked list
 delete_at_head() - deletes the first element of the list
 search(data) - searches for an element with the specified value in the linked list
 '''
