@@ -237,6 +237,73 @@ class TestDoublyLinkedList(unittest.TestCase):
         self.assertIsNone(self.multi_item_list.get_head(),
                           "Head should be None after clearing the list.")
 
+    # -------- reverse ------
+
+    def test_single_node(self):
+        self.dll.insert_at_tail(1)
+        self.dll.reverse()
+        self.assertEqual(str(self.dll), "1")
+
+    # @unittest.skip('slow')
+    def test_multiple_nodes(self):
+        for i in range(1, 6):
+            self.dll.insert_at_tail(i)
+        self.dll.reverse()
+        self.assertEqual(str(self.dll), "5 -> 4 -> 3 -> 2 -> 1")
+
+    # @unittest.skip('slow')
+    def test_empty_list_reverse(self):
+        self.dll.reverse()
+        self.assertEqual(str(self.dll), "")
+
+    # @unittest.skip('slow')
+    def test_two_nodes(self):
+        self.dll.insert_at_tail(1)
+        self.dll.insert_at_tail(2)
+        self.dll.reverse()
+        self.assertEqual(str(self.dll), "2 -> 1")
+
+    # @unittest.skip('slow')
+    def test_large_list(self):
+        for i in range(1, 1001):
+            self.dll.insert_at_tail(i)
+        self.dll.reverse()
+        self.assertEqual(
+            str(self.dll), " -> ".join(map(str, range(1000, 0, -1))))
+
+    def test_head_and_tail_pointers(self):
+        self.dll.insert_at_tail(1)
+        self.dll.insert_at_tail(2)
+        self.dll.insert_at_tail(3)
+        self.dll.reverse()
+        self.assertEqual(self.dll.head.data, 3)
+        self.assertEqual(self.dll.tail.data, 1)
+
+    # @unittest.skip('slow')
+    def test_prev_and_next_pointers(self):
+        self.dll.insert_at_tail(1)
+        self.dll.insert_at_tail(2)
+        self.dll.insert_at_tail(3)
+        self.dll.reverse()
+        node = self.dll.head
+        prev = None
+        while node:
+            self.assertEqual(node.prev, prev)
+            prev = node
+            node = node.next
+
+    # @unittest.skip('slow')
+    def test_multiple_reversals(self):
+        for i in range(1, 6):
+            self.dll.insert_at_tail(i)
+        self.dll.reverse()
+        self.dll.reverse()
+        self.assertEqual(str(self.dll), "1 -> 2 -> 3 -> 4 -> 5")
+
+    # Optional: Cyclic list test if applicable
+    # def test_cyclic_list(self):
+    #     # Implement cyclic list test if necessary
+
 
 if __name__ == '__main__':
     unittest.main()

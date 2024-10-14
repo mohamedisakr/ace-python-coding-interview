@@ -84,15 +84,17 @@ class DoublyLinkedList:
 
     def reverse(self):
         if self.head is None:
-            return None
-        previous = None
+            return
         current = self.head
-
-        while current:
+        self.tail = current
+        while current is not None:
             previous = current.prev
             current.prev = current.next
             current.next = previous
+            if current.prev is None:
+                self.head = current
             current = current.prev
+        self.tail.next = None
 
     def reverseK(self, k):
         if k > self.count:
@@ -122,3 +124,16 @@ class DoublyLinkedList:
             values.append(str(current.data))
             current = current.next
         return " -> ".join(values)
+
+ # def reverse(self):
+    #     if self.head is None:
+    #         return None
+    #     previous = None
+    #     current = self.head
+
+    #     while current:
+    #         previous = current.prev
+    #         current.prev = current.next
+    #         current.next = previous
+    #         current = current.prev
+    #     return previous
