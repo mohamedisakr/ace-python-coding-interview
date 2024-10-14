@@ -23,6 +23,10 @@ class MyQueue:
     def dequeue(self):
         self.items.delete_at_head()
 
+    def reverseK(self, k):
+        # self.items.rev
+        pass
+
     def print_list(self):
         # print(self.items)
         return str(self.items)
