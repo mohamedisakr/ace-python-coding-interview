@@ -1,8 +1,117 @@
 import pytest
 from min_max_tournament import min_max_arr_tournamtent
 from min_max_iterative import min_max_arr_iterative
+from min_max_iterative_sort import min_max_arr_sort
+from min_max_iterative_built_in import min_max_arr_built_in
+
+# Test Cases
 
 
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_single_element(func):
+    assert func([5]) == (5, 5)
+
+
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_two_elements(func):
+    assert func([3, 8]) == (3, 8)
+
+
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_multiple_elements(func):
+    assert func([1, 2, 3, 4, 5]) == (1, 5)
+
+
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_unsorted_array(func):
+    assert func([4, 2, 9, 6, 1]) == (1, 9)
+
+
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_all_same_elements(func):
+    assert func([7, 7, 7, 7, 7]) == (7, 7)
+
+
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_negative_elements(func):
+    assert func([-3, -1, -7, -5]) == (-7, -1)
+
+
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_mixed_positive_and_negative(func):
+    assert func([-10, 5, -2, 4, 1]) == (-10, 5)
+
+
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_large_range(func):
+    assert func([1000, -1000, 0, 500, -500]) == (-1000, 1000)
+
+
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_large_array(func):
+    assert func(list(range(100000))) == (0, 99999)
+
+
+@pytest.mark.parametrize("func", [
+    lambda arr: min_max_arr_tournamtent(arr, 0, len(arr) - 1),
+    min_max_arr_iterative,
+    min_max_arr_sort,
+    min_max_arr_built_in
+])
+def test_empty_array(func):
+    with pytest.raises(ValueError):
+        func([])
+
+# To run the tests, use the command:
+# pytest your_test_file.py
+
+
+'''
 @pytest.mark.parametrize("func", [min_max_arr_tournamtent, min_max_arr_iterative])
 def test_single_element(func):
     if func == min_max_arr_tournamtent:
@@ -93,3 +202,4 @@ def test_empty_array(func):
 
 # To run the tests, use the command:
 # pytest your_test_file.py
+'''
