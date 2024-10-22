@@ -1,6 +1,6 @@
 # Iiterative Method
-def min_max_arr_iterative(arr, lo, hi):
-    if arr is None:
+def min_max_arr_iterative(arr):  # , lo, hi):
+    if not arr:
         raise ValueError('List is empty')
 
     min_val = float('inf')
