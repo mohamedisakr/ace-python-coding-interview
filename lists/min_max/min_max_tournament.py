@@ -1,5 +1,5 @@
 # Tournament Method
-def min_max_arr(arr, lo, hi):
+def min_max_arr_tournamtent(arr, lo, hi):
     # only 1 element in the array
     if lo == hi:
         return arr[lo], arr[hi]
