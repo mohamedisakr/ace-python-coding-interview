@@ -4,7 +4,7 @@ def reverse_in_place(arr):
 
     n = len(arr)
 
-    for i in range(n):
+    for i in range(n // 2):
         arr[i],  arr[n - i - 1] = arr[n - i - 1], arr[i]
 
     return arr
