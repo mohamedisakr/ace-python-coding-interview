@@ -1,5 +1,5 @@
 # Iiterative Method
-def min_max_arr_iterative(arr):  # , lo, hi):
+def min_max_arr_iterative(arr):
     if not arr:
         raise ValueError('List is empty')
 
