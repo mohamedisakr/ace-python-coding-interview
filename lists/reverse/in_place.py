@@ -1,11 +1,10 @@
-def reverse_naive(arr):
+def reverse_in_place(arr):
     if not arr:
         raise ValueError('List is empty')
 
     n = len(arr)
-    temp = [0]*n
 
     for i in range(n):
-        temp[i] = arr[n - i - 1]
+        arr[i],  arr[n - i - 1] = arr[n - i - 1], arr[i]
 
-    return temp
+    return arr
