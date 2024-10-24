@@ -11,8 +11,3 @@ def cyclic_rotate(arr):
     arr[0] = last_item
 
     return arr
-
-
-# Example usage
-arr = [1, 2, 3, 4, 5]
-print(cyclic_rotate(arr))  # Output should be [5, 1, 2, 3, 4]
