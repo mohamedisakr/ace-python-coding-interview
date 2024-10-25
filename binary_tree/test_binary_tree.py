@@ -122,3 +122,5 @@ def test_whitespace_string():
     assert tree.root.value == "   "
     assert tree.root.left is None
     assert tree.root.right is None
+
+# ------ pre_order_print ----- #
