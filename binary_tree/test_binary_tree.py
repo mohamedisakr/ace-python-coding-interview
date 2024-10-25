@@ -184,3 +184,90 @@ def test_tree_with_duplicates(tree_with_duplicates):
 def test_large_tree(large_tree):
     expected_output = " - ".join(map(str, range(1, 11))) + " -"
     assert large_tree.in_order_print() == expected_output
+
+
+@pytest.fixture
+def tree_with_only_left_children():
+    tree = BinaryTree(5)
+    current = tree.root
+    for i in range(4, 0, -1):
+        current.left = Node(i)
+        current = current.left
+    return tree
+
+
+@pytest.fixture
+def tree_with_only_right_children():
+    tree = BinaryTree(1)
+    current = tree.root
+    for i in range(2, 6):
+        current.right = Node(i)
+        current = current.right
+    return tree
+
+
+@pytest.fixture
+def tree_with_mixed_children():
+    tree = BinaryTree(4)
+    tree.root.left = Node(2)
+    tree.root.right = Node(6)
+    tree.root.left.left = Node(1)
+    tree.root.left.right = Node(3)
+    tree.root.right.left = Node(5)
+    tree.root.right.right = Node(7)
+    return tree
+
+
+@pytest.fixture
+def tree_with_null_nodes():
+    tree = BinaryTree(4)
+    tree.root.left = Node(2)
+    tree.root.right = Node(6)
+    tree.root.left.right = Node(3)
+    tree.root.right.left = Node(5)
+    return tree
+
+
+@pytest.fixture
+def tree_with_negative_values():
+    tree = BinaryTree(-1)
+    tree.root.left = Node(-2)
+    tree.root.right = Node(0)
+    tree.root.left.left = Node(-3)
+    tree.root.left.right = Node(-1.5)
+    return tree
+
+
+@pytest.fixture
+def tree_with_non_integer_values():
+    tree = BinaryTree("root")
+    tree.root.left = Node("left")
+    tree.root.right = Node("right")
+    tree.root.left.left = Node("left.left")
+    tree.root.left.right = Node("left.right")
+    return tree
+
+
+def test_tree_with_only_left_children(tree_with_only_left_children):
+    assert tree_with_only_left_children.in_order_print() == "1 - 2 - 3 - 4 - 5 -"
+
+
+def test_tree_with_only_right_children(tree_with_only_right_children):
+    assert tree_with_only_right_children.in_order_print() == "1 - 2 - 3 - 4 - 5 -"
+
+
+def test_tree_with_mixed_children(tree_with_mixed_children):
+    assert tree_with_mixed_children.in_order_print() == "1 - 2 - 3 - 4 - 5 - 6 - 7 -"
+
+
+def test_tree_with_null_nodes(tree_with_null_nodes):
+    assert tree_with_null_nodes.in_order_print() == "2 - 3 - 4 - 5 - 6 -"
+
+
+def test_tree_with_negative_values(tree_with_negative_values):
+    assert tree_with_negative_values.in_order_print() == "-3 - -2 - -1.5 - -1 - 0 -"
+
+
+def test_tree_with_non_integer_values(tree_with_non_integer_values):
+    assert tree_with_non_integer_values.in_order_print(
+    ) == "left.left - left - left.right - root - right -"
