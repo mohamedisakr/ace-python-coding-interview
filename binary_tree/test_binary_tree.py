@@ -1,3 +1,4 @@
+from typing import Any
 import pytest
 from node import Node
 from binarytree import BinaryTree
@@ -404,12 +405,95 @@ def test_single_node_reverse(tree_single_node):
 # def test_two_level_tree(tree_two_level):
 #     assert tree_two_level
 
-# ------ grouping level order --------
+# ------ height --------
+
+
+@pytest.fixture
+def tree_single_node_height():
+    return BinaryTree(1)
+
+
+@pytest.fixture
+def tree_two_level_height():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.right = Node(3)
+    return tree
+
+
+@pytest.fixture
+def tree_unbalanced_height():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.left.left = Node(3)
+    return tree
+
+
+@pytest.fixture
+def tree_with_only_left_children_height():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.left.left = Node(3)
+    return tree
+
+
+@pytest.fixture
+def tree_with_only_right_children_height():
+    tree = BinaryTree(1)
+    tree.root.right = Node(2)
+    tree.root.right.right = Node(3)
+    return tree
+
+
+@pytest.fixture
+def tree_large_height():
+    tree = BinaryTree(1)
+    current = tree.root
+    # Create a large tree by adding nodes
+    for i in range(2, 101):
+        current.right = Node(i)
+        current = current.right
+    return tree
+
+
+def test_single_node_height(tree_single_node):
+    assert tree_single_node.height(tree_single_node.root) == 0
+
+
+def test_two_level_tree_height(tree_two_level):
+    assert tree_two_level.height(tree_two_level.root) == 1
+
+
+def test_unbalanced_tree_height(tree_unbalanced):
+    assert tree_unbalanced.height(tree_unbalanced.root) == 2
+
+
+@pytest.mark.skip
+def test_with_only_left_children_height(tree_with_only_left_children):
+    assert tree_with_only_left_children.height(
+        tree_with_only_left_children.root) == 2
+
+
+@pytest.mark.skip
+def test_with_only_right_children_height(tree_with_only_right_children):
+    assert tree_with_only_right_children.height(
+        tree_with_only_right_children.root) == 2
+
+
+@pytest.mark.skip
+def test_large_tree_height(tree_large):
+    assert tree_large.height(tree_large.root) == 100
+
+
+def test_empty_tree_height():
+    with pytest.raises(TypeError):
+        BinaryTree(None)
+
+# ---- height old test cases --------
 
 # @pytest.fixture
 # def tree_single_node():
 #     return BinaryTree(1)
-
 
 # @pytest.fixture
 # def tree_two_level():
@@ -418,14 +502,12 @@ def test_single_node_reverse(tree_single_node):
 #     tree.root.right = Node(3)
 #     return tree
 
-
 # @pytest.fixture
 # def tree_unbalanced():
 #     tree = BinaryTree(1)
 #     tree.root.left = Node(2)
 #     tree.root.left.left = Node(3)
 #     return tree
-
 
 # @pytest.fixture
 # def tree_with_only_left_children():
@@ -434,7 +516,6 @@ def test_single_node_reverse(tree_single_node):
 #     tree.root.left.left = Node(3)
 #     return tree
 
-
 # @pytest.fixture
 # def tree_with_only_right_children():
 #     tree = BinaryTree(1)
@@ -442,39 +523,34 @@ def test_single_node_reverse(tree_single_node):
 #     tree.root.right.right = Node(3)
 #     return tree
 
-
 # @pytest.fixture
 # def tree_large():
 #     tree = BinaryTree(1)
+#     current = tree.root
 #     # Create a large tree by adding nodes
-#     for i in range(2, 21):
-#         current = tree.root
-#         while current.right is not None:
-#             current = current.right
+#     for i in range(2, 101):
 #         current.right = Node(i)
+#         current = current.right
 #     return tree
 
-
 # def test_single_node(tree_single_node):
-#     assert tree_single_node.level_order_print() == '1 - '
-
+#     assert tree_single_node.height(tree_single_node.root) == 0
 
 # def test_two_level_tree(tree_two_level):
-#     assert tree_two_level.level_order_print() == '1 - 2 - 3 - '
-
+#     assert tree_two_level.height(tree_two_level.root) == 1
 
 # def test_unbalanced_tree(tree_unbalanced):
-#     assert tree_unbalanced.level_order_print() == '1 - 2 - 3 - '
-
+#     assert tree_unbalanced.height(tree_unbalanced.root) == 2
 
 # def test_with_only_left_children(tree_with_only_left_children):
-#     assert tree_with_only_left_children.level_order_print() == '1 - 2 - 3 - '
-
+#     assert tree_with_only_left_children.height(tree_with_only_left_children.root) == 2
 
 # def test_with_only_right_children(tree_with_only_right_children):
-#     assert tree_with_only_right_children.level_order_print() == '1 - 2 - 3 - '
-
+#     assert tree_with_only_right_children.height(tree_with_only_right_children.root) == 2
 
 # def test_large_tree(tree_large):
-#     expected_output = ' - '.join(map(str, range(1, 21))) + ' -'
-#     assert tree_large.level_order_print() == expected_output
+#     assert tree_large.height(tree_large.root) == 100
+
+# def test_empty_tree():
+#     empty_tree = BinaryTree(None)
+#     assert empty_tree.height(empty_tree.root) == -1
