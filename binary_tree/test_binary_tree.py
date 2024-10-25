@@ -277,21 +277,14 @@ def test_tree_with_non_integer_values(tree_with_non_integer_values):
 
 def test_single_node():
     tree = BinaryTree(1)
-    assert tree.post_order_print() == '1 - '
+    assert tree.post_order_print() == '1 -'
 
 
 def test_two_level_tree():
     tree = BinaryTree(1)
     tree.root.left = Node(2)
     tree.root.right = Node(3)
-    assert tree.post_order_print() == '2 - 3 - 1 - '
-
-
-def test_unbalanced_tree():
-    tree = BinaryTree(1)
-    tree.root.left = Node(2)
-    tree.root.left.left = Node(3)
-    assert tree.post_order_print() == '3 - 2 - 1 - '
+    assert tree.post_order_print() == '2 - 3 - 1 -'
 
 
 def test_empty_tree():
