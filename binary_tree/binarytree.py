@@ -1,6 +1,7 @@
 from typing import Any, List, Optional
 from node import Node
 from my_queue import MyQueue
+from my_stack import MyStack
 
 
 class BinaryTree:
@@ -64,30 +65,29 @@ class BinaryTree:
 
         return traverse.strip(" - ") + " -"
 
-    # def level_order_print(self, start: Node):
-    #     if start is None:
-    #         return
+    def reverse_level_order_print(
+        self): return self._reverse_level_order_print(self.root)
 
-    #     que = MyQueue()
-    #     que.enqueue(start)
-    #     traverse = ""
+    def _reverse_level_order_print(self, start: Node) -> str:
+        if start is None:
+            return ""
 
-    #     while len(que) > 0:
-    #         traverse += f'{que.peek()} -'
-    #         node = que.dequeue()
+        queue = MyQueue()
+        stack = MyStack()
 
-    #         if node.left:
-    #             que.enqueue(node.left)
+        queue.enqueue(start)
+        traverse = ""
 
-    #         if node.right:
-    #             que.enqueue(node.right)
+        while len(queue) > 0:
+            node = queue.dequeue()
+            stack.push(node)
 
-    #     return traverse
+            if node.right:
+                queue.enqueue(node.right)
+            if node.left:
+                queue.enqueue(node.left)
 
-
-# tree = BinaryTree(1)
-# tree.root.left = Node(2)
-# tree.root.right = Node(3)
-# tree.root.left.left = Node(4)
-# tree.root.left.right = Node(5)
-# print(tree.level_order_print(tree.root))
+        while len(stack) > 0:
+            node = stack.pop()
+            traverse += f'{node.value}-'
+        return traverse
