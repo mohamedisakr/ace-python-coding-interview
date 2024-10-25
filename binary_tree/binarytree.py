@@ -8,15 +8,12 @@ class BinaryTree:
             raise TypeError("Root value cannot be None")
         self.root = Node(value)
 
-    def pre_order_print(self):
-        return self._pre_order_print(self.root)
-
-    def _pre_order_print(self, start):
+    def pre_order_print(self) -> str:
         result = []
-        self._pre_order_helper(start, result)
+        self._pre_order_helper(self.root, result)
         return ' - '.join(map(str, result)) + ' -'
 
-    def _pre_order_helper(self, node, result):
+    def _pre_order_helper(self, node: Node, result: List[Any]) -> None:
         if node:
             result.append(node.value)
             self._pre_order_helper(node.left, result)
@@ -32,6 +29,20 @@ class BinaryTree:
             self._in_order_helper(node.left, result)
             result.append(node.value)
             self._in_order_helper(node.right, result)
+
+    # def pre_order_print(self):
+    #     return self._pre_order_print(self.root)
+
+    # def _pre_order_print(self, start):
+    #     result = []
+    #     self._pre_order_helper(start, result)
+    #     return ' - '.join(map(str, result)) + ' -'
+
+    # def _pre_order_helper(self, node, result):
+    #     if node:
+    #         result.append(node.value)
+    #         self._pre_order_helper(node.left, result)
+    #         self._pre_order_helper(node.right, result)
 
     # def in_order_print(self) -> str:
     #     return self._in_order_print(self.root)
