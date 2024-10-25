@@ -91,3 +91,10 @@ class BinaryTree:
             node = stack.pop()
             traverse += f'{node.value}-'
         return traverse
+
+    def height(self, node):
+        if not node:
+            return -1
+        left_height = self.height(node.left)
+        right_height = self.height(node.right)
+        return 1 + max(left_height, right_height)
