@@ -292,3 +292,131 @@ def test_empty_tree():
     tree = BinaryTree(1)
     tree.root = None
     assert tree.post_order_print() == ' -'
+
+# -------- level order --------
+
+
+def test_single_node_level():
+    tree = BinaryTree(1)
+    assert tree.level_order_print() == '1 -'
+
+
+def test_two_level_tree_level():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.right = Node(3)
+    assert tree.level_order_print() == '1 - 2 - 3 -'
+
+
+def test_unbalanced_tree_level():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.left.left = Node(3)
+    assert tree.level_order_print() == '1 - 2 - 3 -'
+
+
+def test_empty_tree_level():
+    # Modify this if the BinaryTree should support an empty initialization
+    tree = BinaryTree(1)
+    tree.root = None
+    assert tree.level_order_print() == ''
+
+
+def test_tree_with_only_left_children_level():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.left.left = Node(3)
+    assert tree.level_order_print() == '1 - 2 - 3 -'
+
+
+def test_tree_with_only_right_children_level():
+    tree = BinaryTree(1)
+    tree.root.right = Node(2)
+    tree.root.right.right = Node(3)
+    assert tree.level_order_print() == '1 - 2 - 3 -'
+
+
+@pytest.mark.skip
+def test_large_tree_level():
+    tree = BinaryTree(1)
+    # Create a large tree by adding nodes
+    for i in range(2, 21):
+        tree.root.right = Node(i)
+    # Expected output would be '1 - 2 - 3 - ... - 20 -'
+    expected_output = ' - '.join(map(str, range(1, 21))) + ' -'
+    assert tree.level_order_print() == expected_output
+
+# ------ grouping level order --------
+
+# @pytest.fixture
+# def tree_single_node():
+#     return BinaryTree(1)
+
+
+# @pytest.fixture
+# def tree_two_level():
+#     tree = BinaryTree(1)
+#     tree.root.left = Node(2)
+#     tree.root.right = Node(3)
+#     return tree
+
+
+# @pytest.fixture
+# def tree_unbalanced():
+#     tree = BinaryTree(1)
+#     tree.root.left = Node(2)
+#     tree.root.left.left = Node(3)
+#     return tree
+
+
+# @pytest.fixture
+# def tree_with_only_left_children():
+#     tree = BinaryTree(1)
+#     tree.root.left = Node(2)
+#     tree.root.left.left = Node(3)
+#     return tree
+
+
+# @pytest.fixture
+# def tree_with_only_right_children():
+#     tree = BinaryTree(1)
+#     tree.root.right = Node(2)
+#     tree.root.right.right = Node(3)
+#     return tree
+
+
+# @pytest.fixture
+# def tree_large():
+#     tree = BinaryTree(1)
+#     # Create a large tree by adding nodes
+#     for i in range(2, 21):
+#         current = tree.root
+#         while current.right is not None:
+#             current = current.right
+#         current.right = Node(i)
+#     return tree
+
+
+# def test_single_node(tree_single_node):
+#     assert tree_single_node.level_order_print() == '1 - '
+
+
+# def test_two_level_tree(tree_two_level):
+#     assert tree_two_level.level_order_print() == '1 - 2 - 3 - '
+
+
+# def test_unbalanced_tree(tree_unbalanced):
+#     assert tree_unbalanced.level_order_print() == '1 - 2 - 3 - '
+
+
+# def test_with_only_left_children(tree_with_only_left_children):
+#     assert tree_with_only_left_children.level_order_print() == '1 - 2 - 3 - '
+
+
+# def test_with_only_right_children(tree_with_only_right_children):
+#     assert tree_with_only_right_children.level_order_print() == '1 - 2 - 3 - '
+
+
+# def test_large_tree(tree_large):
+#     expected_output = ' - '.join(map(str, range(1, 21))) + ' -'
+#     assert tree_large.level_order_print() == expected_output

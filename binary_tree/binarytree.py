@@ -85,9 +85,9 @@ class BinaryTree:
     #     return traverse
 
 
-tree = BinaryTree(1)
-tree.root.left = Node(2)
-tree.root.right = Node(3)
-tree.root.left.left = Node(4)
-tree.root.left.right = Node(5)
-print(tree.level_order_print(tree.root))
+# tree = BinaryTree(1)
+# tree.root.left = Node(2)
+# tree.root.right = Node(3)
+# tree.root.left.left = Node(4)
+# tree.root.left.right = Node(5)
+# print(tree.level_order_print(tree.root))
