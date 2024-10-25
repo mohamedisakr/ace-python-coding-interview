@@ -346,6 +346,64 @@ def test_large_tree_level():
     expected_output = ' - '.join(map(str, range(1, 21))) + ' -'
     assert tree.level_order_print() == expected_output
 
+# ----- reverse level order ---------
+
+
+@pytest.fixture
+def tree_single_node():
+    return BinaryTree(1)
+
+
+@pytest.fixture
+def tree_two_level():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.right = Node(3)
+    return tree
+
+
+@pytest.fixture
+def tree_unbalanced():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.left.left = Node(3)
+    return tree
+
+
+@pytest.fixture
+def tree_with_only_left_children_reverse():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.left.left = Node(3)
+    return tree
+
+
+@pytest.fixture
+def tree_with_only_right_children_reverse():
+    tree = BinaryTree(1)
+    tree.root.right = Node(2)
+    tree.root.right.right = Node(3)
+    return tree
+
+
+@pytest.fixture
+def tree_large():
+    tree = BinaryTree(1)
+    # Create a large tree by adding nodes
+    current = tree.root
+    for i in range(2, 21):
+        node = Node(i)
+        current.right = node
+        current = node
+    return tree
+
+
+def test_single_node_reverse(tree_single_node):
+    assert tree_single_node.reverse_level_order_print() == '1-'
+
+# def test_two_level_tree(tree_two_level):
+#     assert tree_two_level
+
 # ------ grouping level order --------
 
 # @pytest.fixture
