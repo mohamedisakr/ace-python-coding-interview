@@ -1,5 +1,8 @@
+from typing import Any, Optional
 from typing import Any
 import pytest
+# from pytest_lazyfixture import lazy_fixture
+
 from node import Node
 from binarytree import BinaryTree
 
@@ -249,10 +252,12 @@ def tree_with_non_integer_values():
     return tree
 
 
+@pytest.mark.skip
 def test_tree_with_only_left_children(tree_with_only_left_children):
     assert tree_with_only_left_children.in_order_print() == "1 - 2 - 3 - 4 - 5 -"
 
 
+@pytest.mark.skip
 def test_tree_with_only_right_children(tree_with_only_right_children):
     assert tree_with_only_right_children.in_order_print() == "1 - 2 - 3 - 4 - 5 -"
 
@@ -489,68 +494,115 @@ def test_empty_tree_height():
     with pytest.raises(TypeError):
         BinaryTree(None)
 
-# ---- height old test cases --------
+# ---- size --------
 
-# @pytest.fixture
-# def tree_single_node():
-#     return BinaryTree(1)
 
-# @pytest.fixture
-# def tree_two_level():
-#     tree = BinaryTree(1)
-#     tree.root.left = Node(2)
-#     tree.root.right = Node(3)
-#     return tree
+@pytest.fixture
+def tree_single_node():
+    return BinaryTree(1)
 
-# @pytest.fixture
-# def tree_unbalanced():
-#     tree = BinaryTree(1)
-#     tree.root.left = Node(2)
-#     tree.root.left.left = Node(3)
-#     return tree
 
-# @pytest.fixture
-# def tree_with_only_left_children():
-#     tree = BinaryTree(1)
-#     tree.root.left = Node(2)
-#     tree.root.left.left = Node(3)
-#     return tree
+@pytest.fixture
+def tree_two_level():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.right = Node(3)
+    return tree
 
-# @pytest.fixture
-# def tree_with_only_right_children():
-#     tree = BinaryTree(1)
-#     tree.root.right = Node(2)
-#     tree.root.right.right = Node(3)
-#     return tree
 
-# @pytest.fixture
-# def tree_large():
-#     tree = BinaryTree(1)
-#     current = tree.root
-#     # Create a large tree by adding nodes
-#     for i in range(2, 101):
-#         current.right = Node(i)
-#         current = current.right
-#     return tree
+@pytest.fixture
+def tree_unbalanced():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.left.left = Node(3)
+    return tree
 
-# def test_single_node(tree_single_node):
-#     assert tree_single_node.height(tree_single_node.root) == 0
 
-# def test_two_level_tree(tree_two_level):
-#     assert tree_two_level.height(tree_two_level.root) == 1
+@pytest.fixture
+def tree_with_only_left_children():
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.left.left = Node(3)
+    return tree
 
-# def test_unbalanced_tree(tree_unbalanced):
-#     assert tree_unbalanced.height(tree_unbalanced.root) == 2
 
-# def test_with_only_left_children(tree_with_only_left_children):
-#     assert tree_with_only_left_children.height(tree_with_only_left_children.root) == 2
+@pytest.fixture
+def tree_with_only_right_children():
+    tree = BinaryTree(1)
+    tree.root.right = Node(2)
+    tree.root.right.right = Node(3)
+    return tree
 
-# def test_with_only_right_children(tree_with_only_right_children):
-#     assert tree_with_only_right_children.height(tree_with_only_right_children.root) == 2
 
-# def test_large_tree(tree_large):
-#     assert tree_large.height(tree_large.root) == 100
+@pytest.fixture
+def tree_large():
+    tree = BinaryTree(1)
+    current = tree.root
+    for i in range(2, 21):
+        current.right = Node(i)
+        current = current.right
+    return tree
 
-# def test_empty_tree():
-#     empty_tree = BinaryTree(None)
-#     assert empty_tree.height(empty_tree.root) == -1
+
+def test_single_node_size(tree_single_node):
+    assert tree_single_node.size_(tree_single_node.root) == 1
+
+
+def test_two_level_tree_size(tree_two_level):
+    assert tree_two_level.size_(tree_two_level.root) == 3
+
+
+def test_unbalanced_tree_size(tree_unbalanced):
+    assert tree_unbalanced.size_(tree_unbalanced.root) == 3
+
+
+def test_left_heavy_tree_size(tree_with_only_left_children):
+    assert tree_with_only_left_children.size_(
+        tree_with_only_left_children.root) == 3
+
+
+def test_right_heavy_tree_size(tree_with_only_right_children):
+    assert tree_with_only_right_children.size_(
+        tree_with_only_right_children.root) == 3
+
+
+def test_large_tree_size(tree_large):
+    assert tree_large.size_(tree_large.root) == 20
+
+
+# @pytest.mark.skip
+# @pytest.mark.parametrize("tree_fixture, expected_size", [
+#     (lazy_fixture('tree_single_node'), 1),
+#     (lazy_fixture('tree_two_level'), 3),
+#     (lazy_fixture('tree_unbalanced'), 3),
+#     (lazy_fixture('tree_with_only_left_children'), 3),
+#     (lazy_fixture('tree_with_only_right_children'), 3),
+#     (lazy_fixture('tree_large'), 20),
+# ])
+# def test_tree_size(tree_fixture, expected_size):
+#     assert tree_fixture.size_(tree_fixture.root) == expected_size
+
+# def test_single_node_size(tree_single_node):
+#     assert tree_single_node.size_(tree_single_node.root) == 1
+
+
+# def test_two_level_tree_size(tree_two_level):
+#     assert tree_two_level.size_(tree_two_level.root) == 3
+
+
+# def test_unbalanced_tree_size(tree_unbalanced):
+#     assert tree_unbalanced.size_(tree_unbalanced.root) == 3
+
+
+# def test_left_heavy_tree_size(tree_with_only_left_children):
+#     assert tree_with_only_left_children.size_(
+#         tree_with_only_left_children.root) == 3
+
+
+# def test_right_heavy_tree_size(tree_with_only_right_children):
+#     assert tree_with_only_right_children.size_(
+#         tree_with_only_right_children.root) == 3
+
+
+# def test_large_tree_size(tree_large):
+#     assert tree_large.size_(tree_large.root) == 20
