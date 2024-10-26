@@ -99,5 +99,7 @@ class BinaryTree:
         right_height = self.height(node.right)
         return 1 + max(left_height, right_height)
 
-    def size(self):
-        pass
+    def size_(self, node: Optional[Node]) -> int:
+        if not node:
+            return 0
+        return 1 + self.size_(node.left) + self.size_(node.right)
