@@ -13,7 +13,7 @@ def generate_toc_json(pdf_path, json_path):
     toc = pdf.get_toc()
 
     print(f'toc type: {type(toc)}')
-    print(f'contents: {toc}')
+    # print(f'contents: {toc}')
     # print(toc)
 
     # Trackers for section, subsection, and sub-subsection
