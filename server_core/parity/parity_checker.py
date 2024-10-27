@@ -1,3 +1,17 @@
+"""
+Question #1
+
+In Python or C++, write an algorithm (function) for determining the parity of an integer, 
+which will be similar to the one below in functionality, but different in essence. 
+Explain the pros and cons of both implementations. 
+
+Example: 
+```
+def isEven(value):
+      return value % 2 == 0
+```      
+"""
+
 
 def is_even(value: int) -> bool:
     """
