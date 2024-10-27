@@ -1,5 +1,5 @@
 
-def isEven(value: int) -> bool:
+def is_even(value: int) -> bool:
     """
     Determines whether an integer is even.
 
@@ -28,6 +28,6 @@ def isEven(value: int) -> bool:
 # value = 7
 # print(f'Number {value} is: {'Odd' if isEven(value) else 'Even'}')
 
-arr = [1, 3, 5, 7, 9]
-for item in arr:
-    print(f'{item} is: {'Even' if isEven(item) else 'Odd'}')
+# arr = [1, 3, 5, 7, 9]
+# for item in arr:
+#     print(f'{item} is: {'Even' if isEven(item) else 'Odd'}')
