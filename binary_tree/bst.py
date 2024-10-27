@@ -24,3 +24,15 @@ class BST:
                 self.insert_helper(current.left, value)
             else:
                 current.left = Node(value)
+
+    def search(self, value):
+        self.search_helper(self.root, value)
+
+    def search_helper(self, current, value):
+        if current:
+            if current.value == value:
+                return True
+            elif current.value < value:
+                self.search_helper(current.right, value)
+            else:
+                self.search_helper(current.left, value)
