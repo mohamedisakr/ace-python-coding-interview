@@ -1,62 +1,5 @@
 import pytest
-from typing import Optional
-
-
-class Node:
-    def __init__(self, value: int, prev: Optional['Node'] = None, next: Optional['Node'] = None):
-        self.value: int = value
-        self.prev: Optional[Node] = prev
-        self.next: Optional[Node] = next
-
-
-class MyCircularQueue:
-    def __init__(self, k: int):
-        self.size: int = k
-        self.count: int = 0
-        self.head: Node = Node(0)
-        self.tail: Node = Node(0, self.head)
-        self.head.next = self.tail
-
-    def enQueue(self, value: int) -> bool:
-        if self.isFull():
-            return False
-        new_node: Node = Node(value, self.tail.prev, self.tail)
-        self.tail.prev.next = new_node
-        self.tail.prev = new_node
-        self.count += 1
-        return True
-
-    def deQueue(self) -> bool:
-        if self.isEmpty():
-            return False
-        self.head.next = self.head.next.next
-        self.head.next.prev = self.head
-        self.count -= 1
-        return True
-
-    def Front(self) -> int:
-        if self.isEmpty():
-            return -1
-        return self.head.next.value
-
-    def Rear(self) -> int:
-        if self.isEmpty():
-            return -1
-        return self.tail.prev.value
-
-    def isEmpty(self) -> bool:
-        return self.count == 0
-
-    def isFull(self) -> bool:
-        return self.count == self.size
-
-    def __repr__(self) -> str:
-        values = []
-        current = self.head.next
-        while current != self.tail:
-            values.append(current.value)
-            current = current.next
-        return f"MyCircularQueue({values})"
+from circular_queue_dll import MyCircularQueue
 
 # Fixtures
 
@@ -132,5 +75,57 @@ def test_enqueue_dequeue_sequence(circular_queue):
     assert circular_queue.Front() == 2
     assert circular_queue.Rear() == 4
 
-# To run the tests, use the command:
-# pytest your_test_file.py
+# --- other test cases -----
+
+
+# @pytest.fixture
+# def circular_queue():
+#     return MyCircularQueue(3)
+
+
+def test_enqueue_empty_queue(circular_queue):
+    assert circular_queue.enQueue(5) == True
+    assert circular_queue.Front() == 5
+    assert circular_queue.Rear() == 5
+
+
+def test_enqueue_partially_filled_queue(circular_queue):
+    circular_queue.enQueue(5)
+    assert circular_queue.enQueue(10) == True
+    assert circular_queue.Front() == 5
+    assert circular_queue.Rear() == 10
+
+
+def test_enqueue_full_queue(circular_queue):
+    circular_queue.enQueue(5)
+    circular_queue.enQueue(10)
+    circular_queue.enQueue(15)
+    assert circular_queue.enQueue(20) == False
+
+
+def test_dequeue_non_empty_queue(circular_queue):
+    circular_queue.enQueue(5)
+    assert circular_queue.deQueue() == True
+    assert circular_queue.isEmpty() == True
+
+
+def test_dequeue_empty_queue(circular_queue):
+    assert circular_queue.deQueue() == False
+
+
+def test_front_non_empty_queue(circular_queue):
+    circular_queue.enQueue(5)
+    assert circular_queue.Front() == 5
+
+
+def test_front_empty_queue(circular_queue):
+    assert circular_queue.Front() == -1
+
+
+def test_rear_non_empty_queue(circular_queue):
+    circular_queue.enQueue(5)
+    assert circular_queue.Rear() == 5
+
+
+# def test_rear_empty_queue(circular_queue):
+#     assert circular

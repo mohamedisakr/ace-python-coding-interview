@@ -7,7 +7,6 @@ class Node:
         self.prev: Optional[Node] = prev
         self.next: Optional[Node] = next
 
-
 # class Node:
 #     def __init__(self, value, previous=None, next=None):
 #         self.value = value
