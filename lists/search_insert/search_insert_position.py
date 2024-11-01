@@ -18,6 +18,3 @@ class Solution:
                 hi = mid - 1
 
         return lo
-
-
-# sol = Solution
