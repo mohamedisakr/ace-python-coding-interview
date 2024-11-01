@@ -26,22 +26,8 @@ class BinarySearchTree:
                 return node, parent
             elif value < node_val:
                 parent = node
-                node = node.left()
+                node = node.left  # .left()
             else:
                 parent = node
-                node = node.right()
+                node = node.right
         return None, None
-
-    # def _search(self, value):
-    #     parent = None
-    #     node = self._root
-    #     if node is not None:
-    #         if node._value == value:
-    #             return node, parent
-    #         elif node._value > value:
-    #             parent = node
-    #             node = node.get_left()
-    #         else:
-    #             parent = node
-    #             node = node.get_right()
-    #     return None, None
