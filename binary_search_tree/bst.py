@@ -3,9 +3,7 @@ from node import Node
 
 
 class BinarySearchTree:
-    # def __init__(self):
     def __init__(self, value) -> None:
-        # self._root = None
         if value is None:
             raise TypeError("Root value cannot be None")
         self._root = Node(value)
@@ -21,7 +19,7 @@ class BinarySearchTree:
         parent = None
         node = self._root
         while node is not None:
-            node_val = node.value()
+            node_val = node.value
             if node_val == value:
                 return node, parent
             elif value < node_val:
