@@ -8,8 +8,8 @@ class TestBinarySearchTree:
     @pytest.fixture
     def bst(self) -> BinarySearchTree:
         bst = BinarySearchTree(10)
-        bst._root.left = Node(5, Node(2), Node(7))
-        bst._root.right = Node(15, Node(12), Node(17))
+        bst._root._left = Node(5, Node(2), Node(7))
+        bst._root._right = Node(15, Node(12), Node(17))
         return bst
 
     def test_search_target_is_root(self, bst: BinarySearchTree):
@@ -57,7 +57,7 @@ class TestBinarySearchTree:
 
     def test_search_tree_with_only_left_children(self):
         bst = BinarySearchTree(10)
-        bst._root.left = Node(5, Node(3))
+        bst._root._left = Node(5, Node(3))
         node, parent = bst._search(3)
         assert node is not None and node.value == 3
         assert parent is not None and parent.value == 5
