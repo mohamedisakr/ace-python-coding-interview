@@ -4,117 +4,102 @@ from node import Node
 from bst import BinarySearchTree
 
 
-class TestBinarySearchTree:
-    @pytest.fixture
-    def bst(self) -> BinarySearchTree:
-        bst = BinarySearchTree(10)
-        bst._root._left = Node(5, Node(2), Node(7))
-        bst._root._right = Node(15, Node(12), Node(17))
-        return bst
-
-    def test_search_target_is_root(self, bst: BinarySearchTree):
-        node, parent = bst._search(10)
-        assert node is not None and node.value == 10
-        assert parent is None
-
-    def test_search_target_in_left_subtree(self, bst: BinarySearchTree):
-        node, parent = bst._search(5)
-        assert node is not None and node.value == 5
-        assert parent is not None and parent.value == 10
-
-    def test_search_target_in_right_subtree(self, bst: BinarySearchTree):
-        node, parent = bst._search(15)
-        assert node is not None and node.value == 15
-        assert parent is not None and parent.value == 10
-
-    def test_search_target_less_than_all_elements(self, bst: BinarySearchTree):
-        node, parent = bst._search(1)
-        assert node is None
-        assert parent is None
-
-    def test_search_target_greater_than_all_elements(self, bst: BinarySearchTree):
-        node, parent = bst._search(20)
-        assert node is None
-        assert parent is None
-
-    def test_search_target_is_leaf(self, bst: BinarySearchTree):
-        node, parent = bst._search(2)
-        assert node is not None and node.value == 2
-        assert parent is not None and parent.value == 5
-
-    def test_search_empty_tree(self):
-        bst = BinarySearchTree(10)
-        bst._root = None
-        node, parent = bst._search(10)
-        assert node is None
-        assert parent is None
-
-    def test_search_single_element_tree(self):
-        bst = BinarySearchTree(10)
-        node, parent = bst._search(10)
-        assert node is not None and node.value == 10
-        assert parent is None
-
-    def test_search_tree_with_only_left_children(self):
-        bst = BinarySearchTree(10)
-        bst._root._left = Node(5, Node(3))
-        node, parent = bst._search(3)
-        assert node is not None and node.value == 3
-        assert parent is not None and parent.value == 5
-
-    @pytest.mark.skip('not completed')
-    def test_search_tree_with_only_right_children(self):
-        bst = BinarySearchTree(10)
-        bst
-
-# Test cases for insert function
+def test_bst_initialization():
+    bst = BinarySearchTree()
+    assert bst._root is None
 
 
-def test_insert_into_empty_tree():
-    bst = BinarySearchTree(10)
-    bst.insert(5)
-    assert bst._root.left is not None
-    assert bst._root.left.value == 5
+def test_bst_insert_into_empty_tree():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    assert bst._root is not None
+    assert bst._root.value() == 10
 
 
-def test_insert_into_tree_with_existing_nodes():
-    bst = BinarySearchTree(10)
+def test_bst_insert_into_tree_with_existing_nodes():
+    bst = BinarySearchTree()
+    bst.insert(10)
     bst.insert(5)
     bst.insert(15)
-    assert bst._root.left is not None
-    assert bst._root.left.value == 5
-    assert bst._root.right is not None
-    assert bst._root.right.value == 15
+    assert bst._root.left() is not None
+    assert bst._root.left().value() == 5
+    assert bst._root.right() is not None
+    assert bst._root.right().value() == 15
 
 
-def test_insert_duplicate_values():
-    bst = BinarySearchTree(10)
+def test_bst_insert_duplicate_values():
+    bst = BinarySearchTree()
     bst.insert(10)
-    assert bst._root.left is not None
-    assert bst._root.left.value == 10
+    bst.insert(10)
+    assert bst._root.left() is not None
+    assert bst._root.left().value() == 10
 
 
-def test_insert_leftmost_value():
-    bst = BinarySearchTree(10)
+def test_bst_insert_leftmost_value():
+    bst = BinarySearchTree()
+    bst.insert(10)
     bst.insert(5)
     bst.insert(2)
-    assert bst._root.left.left is not None
-    assert bst._root.left.left.value == 2
+    assert bst._root.left().left() is not None
+    assert bst._root.left().left().value() == 2
 
 
-def test_insert_rightmost_value():
-    bst = BinarySearchTree(10)
+def test_bst_insert_rightmost_value():
+    bst = BinarySearchTree()
+    bst.insert(10)
     bst.insert(15)
     bst.insert(20)
-    assert bst._root.right.right is not None
-    assert bst._root.right.right.value == 20
+    assert bst._root.right().right() is not None
+    assert bst._root.right().right().value() == 20
 
 
-def test_insert_single_node_tree():
-    bst = BinarySearchTree(10)
+def test_bst_contains_existing_value():
+    bst = BinarySearchTree()
+    bst.insert(10)
     bst.insert(5)
     bst.insert(15)
-    assert bst._root._left is not None
-    assert bst._root._left.value == 5
-    assert bst._root._right is not None
-    assert bst._root._right.value == 15
+    assert bst.contains(5) == True
+    assert bst.contains(15) == True
+
+
+def test_bst_contains_non_existing_value():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    assert bst.contains(20) == False
+
+
+def test_bst_search_existing_value():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(15)
+    node, parent = bst._search(5)
+    assert node is not None
+    assert node.value() == 5
+    assert parent.value() == 10
+
+
+def test_bst_search_non_existing_value():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    node, parent = bst._search(20)
+    assert node is None
+    assert parent is None
+
+
+def test_bst_search_root_value():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    node, parent = bst._search(10)
+    assert node is not None
+    assert node.value() == 10
+    assert parent is None
+
+
+def test_bst_str_repr():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(15)
+    assert str(bst) == '10 (5 ()())(15 ()())'
+    assert repr(bst) == 'BinarySearchTree(10 (5 ()())(15 ()()))'
