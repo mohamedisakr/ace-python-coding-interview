@@ -66,3 +66,55 @@ class TestBinarySearchTree:
     def test_search_tree_with_only_right_children(self):
         bst = BinarySearchTree(10)
         bst
+
+# Test cases for insert function
+
+
+def test_insert_into_empty_tree():
+    bst = BinarySearchTree(10)
+    bst.insert(5)
+    assert bst._root.left is not None
+    assert bst._root.left.value == 5
+
+
+def test_insert_into_tree_with_existing_nodes():
+    bst = BinarySearchTree(10)
+    bst.insert(5)
+    bst.insert(15)
+    assert bst._root.left is not None
+    assert bst._root.left.value == 5
+    assert bst._root.right is not None
+    assert bst._root.right.value == 15
+
+
+def test_insert_duplicate_values():
+    bst = BinarySearchTree(10)
+    bst.insert(10)
+    assert bst._root.left is not None
+    assert bst._root.left.value == 10
+
+
+def test_insert_leftmost_value():
+    bst = BinarySearchTree(10)
+    bst.insert(5)
+    bst.insert(2)
+    assert bst._root.left.left is not None
+    assert bst._root.left.left.value == 2
+
+
+def test_insert_rightmost_value():
+    bst = BinarySearchTree(10)
+    bst.insert(15)
+    bst.insert(20)
+    assert bst._root.right.right is not None
+    assert bst._root.right.right.value == 20
+
+
+def test_insert_single_node_tree():
+    bst = BinarySearchTree(10)
+    bst.insert(5)
+    bst.insert(15)
+    assert bst._root._left is not None
+    assert bst._root._left.value == 5
+    assert bst._root._right is not None
+    assert bst._root._right.value == 15

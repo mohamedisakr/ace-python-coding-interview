@@ -42,7 +42,7 @@ class BinarySearchTree:
             self._root = Node(value)
         else:
             while node is not None:  # True: # node can never be None here
-                if value <= node.value():
+                if value <= node.value:
                     if node.left is None:
                         # We have found the right spot for value
                         node.set_left(Node(value))
