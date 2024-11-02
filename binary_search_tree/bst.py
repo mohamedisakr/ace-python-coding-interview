@@ -126,8 +126,10 @@ class BinarySearchTree:
             None
 
         Functionality:
-            Iterates over the values in the BST. The iteration starts at the root of the BST and
-            traverses the tree using inorder traversal.
+            Iterates over the values in the BST. The iteration starts at the root of the 
+            BST and traverses the tree using in-order traversal.
+
+            left --> root  --> right
         """
         current = self._root
         stack = Stack()
