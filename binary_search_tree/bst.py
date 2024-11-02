@@ -6,6 +6,8 @@ class BinarySearchTree:
     """A class modeling the binary search tree data structure."""
 
     def __init__(self) -> None:
+        # if value is None:
+        #     raise TypeError("Root value cannot be None")
         self._root = None
 
     def __repr__(self) -> str:
@@ -45,7 +47,7 @@ class BinarySearchTree:
         """
         return self._search(value)[0] is not None
 
-    def insert(self, value: any) -> None:
+    def insert(self, value: Any) -> None:
         """Insert a new value into the tree.
 
         Args:
@@ -56,7 +58,7 @@ class BinarySearchTree:
             # Empty tree
             self._root = Node(value)
         else:
-            while True:  # node can never be None here
+            while node is not None:  # while True:  # node can never be None here
                 if value <= node.value():
                     if node.left() is None:
                         # We have found the right spot for value
@@ -72,3 +74,45 @@ class BinarySearchTree:
                 else:
                     # We keep traversing the right branch
                     node = node.right()
+
+    def delete(self, value: any) -> None:
+        """ Delete a value from the tree.
+            If the value is not found, raise a ValueError.
+            If the tree is empty, raise a ValueError.
+            If the tree contains duplicates, delete the first node found.
+        Args:
+            value: The element to be deleted from the tree.
+        """
+        if self._root is None:
+            raise ValueError('Delete on an empty tree')
+        node, parent = self._search(value)
+        if node is None:
+            raise ValueError('Value not found')
+
+        if node.left() is None or node.right() is None:
+            maybe_child = node.right() if node.left() is None else node.left()
+            # The node has at most only one child
+            if parent is None:
+                # The node is the root
+                self._root = maybe_child
+            elif value <= parent.value():
+                parent.set_left(maybe_child)
+            else:
+                parent.set_right(maybe_child)
+        else:  # The node N has two children.
+            # Find and remove the node M with the largest value in the left subtree of N.
+            max_node, max_node_parent = node.left().find_max_in_subtree()
+            if max_node_parent is None:  # M is the left child of N.
+                new_node = Node(max_node.value(), None, node.right())
+            else:
+                new_node = Node(max_node.value(), node.left(), node.right())
+                max_node_parent.set_right(max_node.left())
+            # Then  replace the node to be deleted with a new node with M.value(),
+            # and the same subtrees as N.
+            if parent is None:
+                # The node is the root
+                self._root = new_node
+            elif value <= parent.value():
+                parent.set_left(new_node)
+            else:
+                parent.set_right(new_node)
