@@ -103,3 +103,67 @@ def test_bst_str_repr():
     bst.insert(15)
     assert str(bst) == '10 (5 ()())(15 ()())'
     assert repr(bst) == 'BinarySearchTree(10 (5 ()())(15 ()()))'
+
+
+# Test cases for delete function
+
+
+def test_delete_from_empty_tree():
+    bst = BinarySearchTree()
+    with pytest.raises(ValueError, match="Delete on an empty tree"):
+        bst.delete(10)
+
+
+def test_delete_non_existent_value():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    with pytest.raises(ValueError, match="Value not found"):
+        bst.delete(20)
+
+
+def test_delete_leaf_node():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(15)
+    bst.delete(5)
+    assert bst._root.left() is None
+
+
+def test_delete_node_with_one_child():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(15)
+    bst.insert(2)
+    bst.delete(5)
+    assert bst._root.left().value() == 2
+
+
+def test_delete_node_with_two_children():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(15)
+    bst.insert(2)
+    bst.insert(7)
+    bst.delete(5)
+    assert bst._root.left().value() == 2
+    assert bst._root.left().right().value() == 7
+
+
+def test_delete_root_node():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(15)
+    bst.delete(10)
+    assert bst._root.value() in [5, 15]  # New root should be either 5 or 15
+
+
+def test_delete_duplicate_values():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(10)
+    bst.delete(10)
+    assert bst._root.left() is None  # not
