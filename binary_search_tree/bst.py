@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any
 from node import Node
 
 
@@ -29,3 +29,31 @@ class BinarySearchTree:
                 parent = node
                 node = node.right
         return None, None
+
+    def insert(self, value: Any) -> None:
+        """Insert a new value into the tree.
+
+        Args:
+            value: The new element to be added to the tree.
+        """
+        node = self._root
+        if node is None:
+            # Empty tree
+            self._root = Node(value)
+        else:
+            while node is not None:  # True: # node can never be None here
+                if value <= node.value():
+                    if node.left is None:
+                        # We have found the right spot for value
+                        node.set_left(Node(value))
+                        break
+                    else:
+                        # We keep traversing the left branch
+                        node = node.left
+                elif node.right is None:
+                    # We have found the right spot for value
+                    node.set_right(Node(value))
+                    break
+                else:
+                    # We keep traversing the right branch
+                    node = node.right

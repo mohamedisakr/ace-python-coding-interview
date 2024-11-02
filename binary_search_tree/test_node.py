@@ -21,8 +21,8 @@ def test_set_left_and_right():
     root = Node(10)
     left_child = Node(5)
     right_child = Node(15)
-    root.left = left_child
-    root.right = right_child
+    root._left = left_child
+    root._right = right_child
     assert root.left == left_child
     assert root.right == right_child
 
@@ -60,18 +60,18 @@ def test_single_node_tree_max():
 
 def test_null_children():
     node = Node(10)
-    node.left = None
-    node.right = None
-    assert node.left is None
-    assert node.right is None
+    node._left = None
+    node._right = None
+    assert node._left is None
+    assert node._right is None
 
 
 def test_multiple_levels():
     root = Node(10)
     left_child = Node(5, Node(2), Node(7))
     right_child = Node(15, Node(12), Node(20))
-    root.left = left_child
-    root.right = right_child
+    root._left = left_child
+    root._right = right_child
     assert str(root) == "10 (5 (2 ()())(7 ()()))(15 (12 ()())(20 ()()))"
 
 
@@ -86,12 +86,12 @@ def test_reassign_children():
     root = Node(10)
     left_child = Node(5)
     right_child = Node(15)
-    root.left = left_child
-    root.right = right_child
+    root._left = left_child
+    root._right = right_child
     new_left_child = Node(3)
-    root.left = new_left_child
-    assert root.left == new_left_child
-    assert root.right == right_child
+    root._left = new_left_child
+    assert root._left == new_left_child
+    assert root._right == right_child
 
 
 def test_large_tree():

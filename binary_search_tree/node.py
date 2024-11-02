@@ -37,12 +37,12 @@ class Node:
         return self._right
 
     @left.setter
-    def left(self, node: Optional['Node']) -> None:
+    def set_left(self, node: Optional['Node']) -> None:
         """Set the left child of the node. The old value will be lost."""
         self._left = node
 
     @right.setter
-    def right(self, node: Optional['Node']) -> None:
+    def set_right(self, node: Optional['Node']) -> None:
         """Set the right child of the node. The old value will be lost."""
         self._right = node
 
