@@ -167,3 +167,80 @@ def test_delete_duplicate_values():
     bst.insert(10)
     bst.delete(10)
     assert bst._root.left() is None  # not
+
+
+# Test cases for __iter__ function
+
+
+def test_empty_tree():
+    bst = BinarySearchTree()
+    result = list(bst)
+    assert result == []
+
+
+def test_single_node_tree():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    result = list(bst)
+    assert result == [10]
+
+
+def test_left_skewed_tree():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(2)
+    result = list(bst)
+    assert result == [2, 5, 10]
+
+
+def test_right_skewed_tree():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(15)
+    bst.insert(20)
+    result = list(bst)
+    assert result == [10, 15, 20]
+
+
+def test_balanced_tree():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(15)
+    bst.insert(2)
+    bst.insert(7)
+    bst.insert(12)
+    bst.insert(17)
+    result = list(bst)
+    assert result == [2, 5, 7, 10, 12, 15, 17]
+
+
+def test_duplicate_values():
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(15)
+    bst.insert(5)  # Duplicate value
+    result = list(bst)
+    assert result == [5, 5, 10, 15]
+
+
+def test_non_integer_values():
+    bst = BinarySearchTree()
+    bst.insert("d")
+    bst.insert("b")
+    bst.insert("f")
+    bst.insert("a")
+    bst.insert("c")
+    bst.insert("e")
+    result = list(bst)
+    assert result == ["a", "b", "c", "d", "e", "f"]
+
+
+def test_large_tree():
+    bst = BinarySearchTree()
+    for i in range(1, 1001):
+        bst.insert(i)
+    result = list(bst)
+    assert result == list(range(1, 1001))
