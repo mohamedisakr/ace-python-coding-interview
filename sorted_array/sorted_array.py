@@ -6,9 +6,7 @@ from typing import Union
 
 
 class SortedArray:
-    def __init__(self, max_size, typecode='l'):  # 'u'
-        # self._array = array(typecode)  # , max_size
-        # self._array = core.Array(max_size, typecode)
+    def __init__(self, max_size, typecode='l'):
         self._array = array(typecode, [0] * max_size)
         self._max_size = max_size
         self._size = 0
@@ -27,3 +25,19 @@ class SortedArray:
 
         self._array[0] = value
         self._size += 1
+
+    def search(self, target):
+        for i in range(self._size):
+            if self._array[i] == target:
+                return i
+        return None
+
+    def delete(self, target):
+        index = self.search(target)
+        if index is None:
+            raise ValueError(f'Unable to delete element {
+                             target}: the entry is not in the array')
+
+        for i in range(index, self._size-1):
+            self._array[i] = self._array[i+1]
+        self._size -= 1
