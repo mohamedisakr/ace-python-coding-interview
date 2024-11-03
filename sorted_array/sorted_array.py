@@ -1,10 +1,15 @@
-import arrays.core as core
+# import arrays.core as core
+# from arrays.core import Array
+# from array import array
+from array import array
 from typing import Union
 
 
 class SortedArray:
-    def __init__(self, max_size, typecode='l'):
-        self._array = core.Array(max_size, typecode)
+    def __init__(self, max_size, typecode='l'):  # 'u'
+        # self._array = array(typecode)  # , max_size
+        # self._array = core.Array(max_size, typecode)
+        self._array = array(typecode, [0] * max_size)
         self._max_size = max_size
         self._size = 0
 
