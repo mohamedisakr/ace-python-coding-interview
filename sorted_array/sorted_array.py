@@ -26,14 +26,16 @@ class SortedArray:
         self._array[0] = value
         self._size += 1
 
-    def search(self, target):
+    def linear_search(self, target):
         for i in range(self._size):
             if self._array[i] == target:
                 return i
+            if self._array[i] > target:
+                return None
         return None
 
     def delete(self, target):
-        index = self.search(target)
+        index = self.linear_search(target)
         if index is None:
             raise ValueError(f'Unable to delete element {
                              target}: the entry is not in the array')
