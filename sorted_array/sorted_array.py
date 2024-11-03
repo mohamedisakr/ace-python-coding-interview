@@ -34,6 +34,20 @@ class SortedArray:
                 return None
         return None
 
+    def binary_search(self, target):
+        lo = 0
+        hi = self._size - 1
+        while lo <= hi:
+            mid = lo+(hi-lo)//2
+            val = self._array[mid]
+            if val == target:
+                return mid
+            elif val > target:
+                hi = mid - 1
+            else:
+                lo = mid + 1
+        return None
+
     def delete(self, target):
         index = self.linear_search(target)
         if index is None:
