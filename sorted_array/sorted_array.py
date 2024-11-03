@@ -49,7 +49,7 @@ class SortedArray:
         return None
 
     def delete(self, target):
-        index = self.linear_search(target)
+        index = self.binary_search(target)
         if index is None:
             raise ValueError(f'Unable to delete element {
                              target}: the entry is not in the array')
