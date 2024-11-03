@@ -239,3 +239,151 @@ def test_delete_duplicate_values():
     assert sa._array[1] == 20
     # Ensure one of the duplicates is found
     assert sa.linear_search(10) == 0 or sa.linear_search(10) == 1
+
+
+# Test cases for binary_search function
+
+def test_binary_search_in_empty_array():
+    sa = SortedArray(5)
+    assert sa.binary_search(10) is None
+
+
+def test_binary_search_existing_value():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    assert sa.binary_search(20) == 1
+    assert sa.binary_search(10) == 0
+    assert sa.binary_search(30) == 2
+
+
+def test_binary_search_non_existing_value():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    assert sa.binary_search(40) is None
+
+
+def test_binary_search_first_element():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    assert sa.binary_search(10) == 0
+
+
+def test_binary_search_last_element():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    assert sa.binary_search(30) == 2
+
+
+def test_binary_search_after_deletions():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    sa._array[1] = sa._array[2]  # Simulate deletion by shifting left
+    sa._size -= 1
+    assert sa.binary_search(20) is None
+    assert sa.binary_search(30) == 1
+
+
+def test_binary_search_duplicate_values():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(10)
+    sa.insert(20)
+    # Ensure one of the duplicates is found
+    assert sa.binary_search(10) == 0 or sa.binary_search(10) == 1
+
+
+@pytest.mark.skip('alpha characters')
+def test_binary_search_non_integer_values():
+    sa = SortedArray(5, 'u')
+    sa.insert(ord('a'))
+    sa.insert(ord('b'))
+    sa.insert(ord('c'))
+    assert sa.binary_search(ord('b')) == 1
+
+
+# Test cases for binary_search function
+
+def test_binary_search_in_empty_array():
+    sa = SortedArray(5)
+    assert sa.binary_search(10) is None
+
+
+def test_binary_search_existing_value():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    assert sa.binary_search(20) == 1
+    assert sa.binary_search(10) == 0
+    assert sa.binary_search(30) == 2
+
+
+def test_binary_search_non_existing_value():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    assert sa.binary_search(40) is None
+
+
+def test_binary_search_first_element():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    assert sa.binary_search(10) == 0
+
+
+def test_binary_search_last_element():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    assert sa.binary_search(30) == 2
+
+
+def test_binary_search_after_deletions():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    sa._array[1] = sa._array[2]  # Simulate deletion by shifting left
+    sa._size -= 1
+    assert sa.binary_search(20) is None
+    assert sa.binary_search(30) == 1
+
+
+def test_binary_search_duplicate_values():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(10)
+    sa.insert(20)
+    assert sa.binary_search(10) == 0 or sa.binary_search(
+        10) == 1  # Ensure one of the duplicates is found
+
+
+def test_binary_search_partially_filled_array():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(30)
+    assert sa.binary_search(20) is None
+    assert sa.binary_search(30) == 1
+
+
+def test_binary_search_boundary_values():
+    sa = SortedArray(5)
+    sa.insert(10)
+    sa.insert(20)
+    sa.insert(30)
+    assert sa.binary_search(0) is None  # Below minimum value
+    assert sa.binary_search(40) is None  # Above maximum value
