@@ -32,9 +32,11 @@ class DynamicArray:
                 return index
         return None
 
-    def half_size(self, factor: float = 4):
+    def half_size(self, factor: int = 4):
+        # self._capacity //= factor
         # create new array with the new capacity
-        new_array = array(self._typecode, [0] * (self._capacity/factor))
+        new_array = array(self._typecode, [0] * int(self._capacity//factor))
+        #
         # copy the original array
         for i in range(self._size):
             new_array[i] = self._array[i]
