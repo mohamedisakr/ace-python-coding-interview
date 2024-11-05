@@ -1,5 +1,5 @@
-from array import array
 # from typing import Optional, Union
+from array import array
 
 
 class DynamicArray:
@@ -12,18 +12,19 @@ class DynamicArray:
     def resize(self, factor: int = 2) -> None:
         # double capacity
         self._capacity *= factor
+        # create new array with the new capacity
+        new_array = array(self._typecode, [0] * self._capacity)
         # copy the original array
-        original_array = self._array[:]
-        # expand max_size array
-        self._array = [0] * (self._capacity)
-        # copy old array items to the newly one (one by one)
-        self._array = original_array[:]
+        for i in range(self._size):
+            new_array[i] = self._array[i]
+        self._array = new_array
 
     def insert(self, value):
-        if self._size >= self._capacity:
+        if self._size == self._capacity:
             self.resize()
 
-        self._array[self._size + 1] = value
+        self._array[self._size] = value
+        self._size += 1
 
     # def delete(self, target):
     #     index = self.binary_search(target)
