@@ -26,12 +26,31 @@ class DynamicArray:
         self._array[self._size] = value
         self._size += 1
 
-    # def delete(self, target):
-    #     index = self.binary_search(target)
-    #     if index is None:
-    #         raise ValueError(f'Unable to delete element {
-    #                          target}: the entry is not in the array')
+    def find(self, target):
+        for index in range(self._size):
+            if self._array[index] == target:
+                return index
+        return None
 
-    #     for i in range(index, self._size-1):
-    #         self._array[i] = self._array[i+1]
-    #     self._size -= 1
+    def half_size(self, factor: float = 4):
+        # create new array with the new capacity
+        new_array = array(self._typecode, [0] * (self._capacity/factor))
+        # copy the original array
+        for i in range(self._size):
+            new_array[i] = self._array[i]
+        self._array = new_array
+
+    def delete(self, target):
+        index = self.find(target)
+        if index is None:
+            raise ValueError(f'Unable to delete element {
+                             target}: the entry is not in the array')
+
+        for i in range(index, self._size-1):
+            self._array[i] = self._array[i+1]
+
+        self._array[self._size-1] = 0
+        self._size -= 1
+
+        if self._capacity > 1 and self._size <= self._capacity/4:
+            self.half_size()
