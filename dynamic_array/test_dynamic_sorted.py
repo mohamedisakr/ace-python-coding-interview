@@ -157,3 +157,105 @@ def test_insert_float_values():
     assert dsa._array[1] == 15.3
     assert dsa._array[2] == 20.1
     assert dsa._size == 3
+
+# Test cases for delete function
+
+
+def test_delete_from_empty_array():
+    dsa = DynamicSortedArray(1)
+    with pytest.raises(ValueError, match="Unable to delete element 10: the entry is not in the array"):
+        dsa.delete(10)
+
+
+def test_delete_existing_value():
+    dsa = DynamicSortedArray(5)
+    dsa.insert(10)
+    dsa.insert(20)
+    dsa.insert(30)
+    dsa.delete(20)
+    assert dsa._size == 2
+    assert dsa._array[0] == 10
+    assert dsa._array[1] == 30
+    assert 20 not in dsa._array[:dsa._size]
+
+
+def test_delete_non_existing_value():
+    dsa = DynamicSortedArray(5)
+    dsa.insert(10)
+    dsa.insert(20)
+    dsa.insert(30)
+    with pytest.raises(ValueError, match="Unable to delete element 40: the entry is not in the array"):
+        dsa.delete(40)
+
+
+def test_delete_first_element():
+    dsa = DynamicSortedArray(5)
+    dsa.insert(10)
+    dsa.insert(20)
+    dsa.insert(30)
+    dsa.delete(10)
+    assert dsa._size == 2
+    assert dsa._array[0] == 20
+    assert dsa._array[1] == 30
+    assert 10 not in dsa._array[:dsa._size]
+
+
+def test_delete_last_element():
+    dsa = DynamicSortedArray(5)
+    dsa.insert(10)
+    dsa.insert(20)
+    dsa.insert(30)
+    dsa.delete(30)
+    assert dsa._size == 2
+    assert dsa._array[0] == 10
+    assert dsa._array[1] == 20
+    assert 30 not in dsa._array[:dsa._size]
+
+
+def test_delete_after_multiple_insertions():
+    dsa = DynamicSortedArray(2)
+    for i in range(10):  # Multiple insertions to trigger multiple resizes
+        dsa.insert(i)
+    dsa.delete(0)
+    dsa.delete(9)
+    assert dsa._size == 8
+    for i in range(8):
+        assert dsa._array[i] == i + 1
+    assert 0 not in dsa._array[:dsa._size]
+    assert 9 not in dsa._array[:dsa._size]
+
+
+def test_delete_duplicate_values():
+    dsa = DynamicSortedArray(5)
+    dsa.insert(10)
+    dsa.insert(10)
+    dsa.insert(20)
+    dsa.delete(10)
+    assert dsa._size == 2
+    assert dsa._array[0] == 10
+    assert dsa._array[1] == 20
+    assert dsa._array[2] != 10
+
+
+def test_delete_negative_values():
+    dsa = DynamicSortedArray(5)
+    dsa.insert(-10)
+    dsa.insert(-20)
+    dsa.insert(0)
+    dsa.delete(-10)
+    assert dsa._size == 2
+    assert dsa._array[0] == -20
+    assert dsa._array[1] == 0
+    assert -10 not in dsa._array[:dsa._size]
+
+
+def test_delete_triggers_resize():
+    dsa = DynamicSortedArray(4)
+    dsa.insert(10)
+    dsa.insert(20)
+    dsa.insert(30)
+    dsa.insert(40)
+    dsa.delete(10)
+    dsa.delete(20)
+    assert dsa._size == 2
+    assert dsa._capacity == 4  # Assuming the capacity halves when size <= capacity // 4
