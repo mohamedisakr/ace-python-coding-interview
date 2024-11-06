@@ -5,7 +5,7 @@ class SinglyLinkedList:
     def __init__(self):
         self._head = None
 
-    def insert_to_back(self, data):
+    def insert_to_back(self, data) -> None:
         current = self._head
         if current is None:
             self._head = Node(data)
