@@ -399,3 +399,136 @@ def test_insert_after_exception_handling():
     sll.insert_in_front(10)
     assert sll._head.data() == 10
     assert sll._head.next() is None
+
+
+# Test cases for delete function
+
+
+def test_delete_from_empty_list():
+    sll = SinglyLinkedList()
+    with pytest.raises(ValueError, match=r'No element with value .* was found in the list.'):
+        sll.delete(10)
+
+
+def test_delete_single_element_found():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.delete(10)
+    assert sll._head is None
+
+
+def test_delete_single_element_not_found():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    with pytest.raises(ValueError, match=r'No element with value .* was found in the list.'):
+        sll.delete(20)
+
+
+def test_delete_first_element():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_to_back(20)
+    sll.insert_to_back(30)
+    sll.delete(10)
+    assert sll._head.data() == 20
+    assert sll._head.next().data() == 30
+    assert sll._head.next().next() is None
+
+
+def test_delete_last_element():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_to_back(20)
+    sll.insert_to_back(30)
+    sll.delete(30)
+    assert sll._head.data() == 10
+    assert sll._head.next().data() == 20
+    assert sll._head.next().next() is None
+
+
+def test_delete_middle_element():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_to_back(20)
+    sll.insert_to_back(30)
+    sll.delete(20)
+    assert sll._head.data() == 10
+    assert sll._head.next().data() == 30
+    assert sll._head.next().next() is None
+
+
+def test_delete_duplicate_elements():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_to_back(20)
+    sll.insert_to_back(20)
+    sll.insert_to_back(30)
+    sll.delete(20)
+    assert sll._head.data() == 10
+    assert sll._head.next().data() == 20
+    assert sll._head.next().next().data() == 30
+    assert sll._head.next().next().next() is None
+
+
+def test_delete_multiple_elements():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_to_back(20)
+    sll.insert_to_back(30)
+    sll.delete(10)
+    sll.delete(30)
+    assert sll._head.data() == 20
+    assert sll._head.next() is None
+
+
+def test_delete_none_value():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(None)
+    sll.delete(None)
+    assert sll._head is None
+
+
+def test_delete_various_data_types():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_to_back("string")
+    sll.insert_to_back(15.5)
+    sll.delete("string")
+    assert sll._head.data() == 10
+    assert sll._head.next().data() == 15.5
+
+
+def test_delete_large_data():
+    sll = SinglyLinkedList()
+    large_data = "x" * 10000  # Large string data
+    sll.insert_to_back(large_data)
+    sll.delete(large_data)
+    assert sll._head is None
+
+
+def test_delete_first_after_insert_front():
+    sll = SinglyLinkedList()
+    sll.insert_in_front(10)
+    sll.insert_in_front(20)
+    sll.delete(20)
+    assert sll._head.data() == 10
+    assert sll._head.next() is None
+
+
+def test_delete_last_after_insert_front():
+    sll = SinglyLinkedList()
+    sll.insert_in_front(10)
+    sll.insert_in_front(20)
+    sll.delete(10)
+    assert sll._head.data() == 20
+    assert sll._head.next() is None
+
+
+def test_delete_middle_after_insert_front():
+    sll = SinglyLinkedList()
+    sll.insert_in_front(10)
+    sll.insert_in_front(20)
+    sll.insert_in_front(30)
+    sll.delete(20)
+    assert sll._head.data() == 30
+    assert sll._head.next().data() == 10
