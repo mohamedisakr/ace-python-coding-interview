@@ -13,3 +13,7 @@ class SinglyLinkedList:
             while current.next() is not None:
                 current = current.next()
             current.append(Node(data))
+
+    def insert_in_front(self, data) -> None:
+        old_head = self._head
+        self._head = Node(data, old_head)
