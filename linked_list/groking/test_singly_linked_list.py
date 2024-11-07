@@ -104,7 +104,7 @@ def test_insert_none_value():
     assert sll._head.next() is None
 
 
-@pytest.mark.skip('postponed till clear function implemented')
+# @pytest.mark.skip('postponed till clear function implemented')
 def test_insert_to_back_after_clear():
     sll = SinglyLinkedList()
     sll.insert_to_back(10)
@@ -254,7 +254,7 @@ def test_insert_to_front_with_large_data():
     assert sll._head.next() is None
 
 
-@pytest.mark.skip('postponed till clear function implemented')
+# @pytest.mark.skip('postponed till clear function implemented')
 def test_insert_to_front_after_clear():
     sll = SinglyLinkedList()
     sll.insert_in_front(10)
