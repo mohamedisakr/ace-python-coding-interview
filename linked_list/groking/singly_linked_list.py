@@ -26,6 +26,14 @@ class SinglyLinkedList:
             current = current.next()
         return None
 
+    def delete_from_front(self) -> int:
+        if self._head is None:
+            return
+        old_head = self._head
+        self._head = old_head.next()
+        old_head._next = None
+        return old_head.data()
+
     def delete(self, target):
         previous = None
         current = self._head
