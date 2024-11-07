@@ -25,3 +25,18 @@ class SinglyLinkedList:
                 return current
             current = current.next()
         return None
+
+    def delete(self, target):
+        previous = None
+        current = self._head
+        while current is not None:
+            if current.data() == target:
+                if previous is None:
+                    self._head = current.next()
+                else:
+                    previous.append(current.next())
+                return
+            previous = current
+            current = current.next()
+        raise ValueError(f'No element with value {
+                         target} was found in the list.')
