@@ -40,3 +40,6 @@ class SinglyLinkedList:
             current = current.next()
         raise ValueError(f'No element with value {
                          target} was found in the list.')
+
+    def clear(self):
+        self._head = None
