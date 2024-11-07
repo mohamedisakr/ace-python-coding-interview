@@ -532,3 +532,90 @@ def test_delete_middle_after_insert_front():
     sll.delete(20)
     assert sll._head.data() == 30
     assert sll._head.next().data() == 10
+
+# Test cases for delete_from_front function
+
+
+def test_delete_from_empty_list_from_front():
+    sll = SinglyLinkedList()
+    result = sll.delete_from_front()
+    assert result is None
+    assert sll._head is None
+
+
+def test_delete_single_element():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    result = sll.delete_from_front()
+    assert result == 10
+    assert sll._head is None
+
+
+def test_delete_first_of_multiple_elements():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_to_back(20)
+    sll.insert_to_back(30)
+    result = sll.delete_from_front()
+    assert result == 10
+    assert sll._head.data() == 20
+    assert sll._head.next().data() == 30
+    assert sll._head.next().next() is None
+
+
+def test_delete_until_empty():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_to_back(20)
+    sll.delete_from_front()
+    sll.delete_from_front()
+    assert sll._head is None
+
+
+def test_delete_with_none_value():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(None)
+    result = sll.delete_from_front()
+    assert result is None
+    assert sll._head is None
+
+
+def test_delete_with_various_data_types():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_to_back("string")
+    sll.insert_to_back(15.5)
+    result = sll.delete_from_front()
+    assert result == 10
+    result = sll.delete_from_front()
+    assert result == "string"
+    result = sll.delete_from_front()
+    assert result == 15.5
+
+
+def test_delete_with_large_number_of_elements():
+    sll = SinglyLinkedList()
+    for i in range(1000):
+        sll.insert_to_back(i)
+    result = sll.delete_from_front()
+    assert result == 0
+    assert sll._head.data() == 1
+
+
+def test_delete_with_large_data():
+    sll = SinglyLinkedList()
+    large_data = "x" * 10000  # Large string data
+    sll.insert_to_back(large_data)
+    result = sll.delete_from_front()
+    assert result == large_data
+    assert sll._head is None
+
+
+def test_delete_after_mixed_operations():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    sll.insert_in_front(20)
+    sll.insert_to_back(30)
+    result = sll.delete_from_front()
+    assert result == 20
+    assert sll._head.data() == 10
