@@ -17,3 +17,11 @@ class SinglyLinkedList:
     def insert_in_front(self, data) -> None:
         old_head = self._head
         self._head = Node(data, old_head)
+
+    def search(self, target: Node) -> Node:
+        current = self._head
+        while current is not None:
+            if current.data() == target:
+                return current
+            current = current.next()
+        return None
