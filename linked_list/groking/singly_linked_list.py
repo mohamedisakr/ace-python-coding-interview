@@ -49,5 +49,13 @@ class SinglyLinkedList:
         raise ValueError(f'No element with value {
                          target} was found in the list.')
 
+    def traverse(self, func):
+        result = []
+        current = self._head
+        while current is not None:
+            result.append(func(current.data()))
+            current = current.next()
+        return result
+
     def clear(self):
         self._head = None
