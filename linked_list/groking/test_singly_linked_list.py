@@ -619,3 +619,107 @@ def test_delete_after_mixed_operations():
     result = sll.delete_from_front()
     assert result == 20
     assert sll._head.data() == 10
+
+# Define some sample functions to apply during traversal
+
+
+def increment(x):
+    return x + 1
+
+
+def square(x):
+    return x * x
+
+
+def to_string(x):
+    return str(x)
+
+
+def double(x):
+    return x * 2
+
+
+def is_even(x):
+    return x % 2 == 0
+
+# Test cases for traverse function
+
+
+def test_traverse_empty_list():
+    sll = SinglyLinkedList()
+    result = sll.traverse(increment)
+    assert result == []
+
+
+def test_traverse_single_element_list():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(10)
+    result = sll.traverse(increment)
+    assert result == [11]
+
+
+def test_traverse_multiple_elements_list():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(1)
+    sll.insert_to_back(2)
+    sll.insert_to_back(3)
+    result = sll.traverse(square)
+    assert result == [1, 4, 9]
+
+
+def test_traverse_various_data_types():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(1)
+    sll.insert_to_back("hello")
+    sll.insert_to_back(3.5)
+    result = sll.traverse(to_string)
+    assert result == ["1", "hello", "3.5"]
+
+
+def test_traverse_with_large_numbers():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(1000000)
+    sll.insert_to_back(2000000)
+    result = sll.traverse(double)
+    assert result == [2000000, 4000000]
+
+
+def test_traverse_with_negative_numbers():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(-1)
+    sll.insert_to_back(-2)
+    result = sll.traverse(square)
+    assert result == [1, 4]
+
+
+def test_traverse_boolean_function():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(1)
+    sll.insert_to_back(2)
+    sll.insert_to_back(3)
+    result = sll.traverse(is_even)
+    assert result == [False, True, False]
+
+
+def test_traverse_with_none_values():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(None)
+    sll.insert_to_back(10)
+    result = sll.traverse(lambda x: x if x is not None else "None")
+    assert result == ["None", 10]
+
+
+def test_traverse_with_callable_objects():
+    sll = SinglyLinkedList()
+    sll.insert_to_back(lambda x: x + 1)
+    sll.insert_to_back(lambda x: x * 2)
+    result = sll.traverse(lambda f: f(10))
+    assert result == [11, 20]
+
+
+def test_traverse_with_large_list():
+    sll = SinglyLinkedList()
+    for i in range(1000):
+        sll.insert_to_back(i)
+    result = sll.traverse(increment)
+    assert result == [i + 1 for i in range(1000)]
