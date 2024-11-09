@@ -1,6 +1,6 @@
 import pytest
-from singly_linked_list import SinglyLinkedList
-from node import Node
+from linked_list.groking.singly_linked_list.singly_linked_list import SinglyLinkedList
+from linked_list.groking.singly_linked_list.node import Node
 
 # Test cases for insert_to_back function
 

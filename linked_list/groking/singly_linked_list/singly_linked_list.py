@@ -1,4 +1,4 @@
-from node import Node
+from linked_list.groking.singly_linked_list.node import Node
 
 
 class SinglyLinkedList:
