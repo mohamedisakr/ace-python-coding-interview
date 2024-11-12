@@ -26,10 +26,10 @@ class DoublyLinkedList:
             self._tail = new_node
             self._tail.append(orig_tail)
 
-    def search(self, target: Node) -> Node:
+    def search(self, target) -> Node:  # : Node
         current = self._head
         while current is not None:
-            if current.data() == target.data():
+            if current.data() == target:
                 return current
             current = current.next()
         return None
@@ -41,7 +41,7 @@ class DoublyLinkedList:
         node = self.search(target)
 
         if node is None:
-            return ValueError(f'{target.data()} not found!')
+            return ValueError(f'{target} not found!')  # .data()
 
         if node.prev() is None:
             self._head = node.next()
