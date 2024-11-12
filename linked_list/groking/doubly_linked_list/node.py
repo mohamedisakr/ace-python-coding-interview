@@ -13,16 +13,16 @@ class Node:
     def has_next(self):
         return self._next is not None
 
-    def append(self, next_node):
-        self._next = next_node
-        if next_node is not None:
-            next_node._prev = self
-
     def prev(self):
         return self._prev
 
     def has_prev(self):
         return self._prev is not None
+
+    def append(self, next_node):
+        self._next = next_node
+        if next_node is not None:
+            next_node._prev = self
 
     def prepend(self, prev_node):
         self._prev = prev_node
