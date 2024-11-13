@@ -6,6 +6,8 @@ from typing import List
 class Solution:
     def findContentChildren(self, g: List[int], s: List[int]) -> int:
         m, n = len(g), len(s)
+        g.sort()
+        s.sort()
         i, j = 0, 0  # greed factors, cookie sizes
         content = 0
 
