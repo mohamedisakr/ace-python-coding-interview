@@ -8,5 +8,9 @@ import functools
 
 class Solution:
     def hasGroupsSizeX(self, deck: List[int]) -> bool:
+        def get_gcd(nums: List[int]):
+            return functools.reduce(math.gcd, nums)
+
         count = collections.Counter(deck)
-        return functools.reduce(math.gcd, count.values()) >= 2
+
+        return get_gcd(list(count.values())) > 1
