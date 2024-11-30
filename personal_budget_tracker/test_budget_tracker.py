@@ -1,8 +1,7 @@
-import pytest
-from datetime import datetime
 from os import path
+import pytest
 from budget_tracker import BudgetTracker
-from transaction import Transaction
+
 
 # Test creating a BudgetTracker object
 
@@ -106,19 +105,6 @@ def test_view_transactions_multiple(capsys):
     assert "Bus ticket" in captured.out
 
 
-# # Test saving transactions to a file
-# def test_save_to_file(tmp_path):
-#     bt = BudgetTracker()
-#     bt.add_transaction("2023-04-05", "Food", 25.50, "Lunch")
-#     file_path = tmp_path / "budget.csv"
-#     bt.save_to_file(file_path)
-#     assert file_path.exists()
-#     with open(file_path, 'r') as file:
-#         lines = file.readlines()
-#         assert len(lines) == 2  # Header + 1 transaction
-
-# Test saving transactions to a file
-
 # Test saving transactions to a file in the current directory
 def test_save_to_file():
     bt = BudgetTracker()
@@ -129,19 +115,6 @@ def test_save_to_file():
     with open(file_path, 'r') as file:
         lines = file.readlines()
         assert len(lines) == 2  # Header + 1 transaction
-
-
-# def test_save_to_file(tmp_path):
-#     bt = BudgetTracker()
-#     bt.add_transaction("2023-04-05", "Food", 25.50, "Lunch")
-#     file_path = tmp_path / "budget.csv"
-#     bt.save_to_file()
-#     assert file_path.exists()
-#     with open(file_path, 'r') as file:
-#         lines = file.readlines()
-#         assert len(lines) == 2  # Header + 1 transaction
-
-# Test handling file write errors
 
 
 def test_save_to_file_write_error(monkeypatch):
@@ -188,8 +161,6 @@ def test_load_from_file_read_error(monkeypatch):
 
 # Test loading from a corrupted or incomplete file
 
-# Test loading from a corrupted or incomplete file
-
 
 def test_load_from_corrupted_file(tmp_path):
     file_path = path.join(path.dirname(__file__), 'budget.csv')
@@ -203,8 +174,6 @@ def test_load_from_corrupted_file(tmp_path):
 
 
 # Test generating a category summary with no transactions
-
-
 def test_category_summary_empty(capsys):
     bt = BudgetTracker()
     bt.category_summary()
@@ -232,7 +201,6 @@ def test_monthly_report_empty(capsys):
     captured = capsys.readouterr()
     assert captured.out == "\nTransactions for 2023-04\nTotal: $0.00\n"
 
-# Test generating a monthly report for a month with multiple transactions
 
 # Test generating a monthly report for a month with multiple transactions
 
@@ -246,23 +214,3 @@ def test_monthly_report_multiple(capsys):
     assert "- Lunch: $25.50" in captured.out
     assert "- Bus ticket: $10.00" in captured.out
     assert "Total: $35.50" in captured.out
-
-# Test loading from a corrupted or incomplete file
-# def test_load_from_corrupted_file(tmp_path):
-#     file_path = tmp_path / "budget.csv"
-#     with open(file_path, 'w') as file:
-#         file.write("Date,Category,Amount,Description\n")
-#         file.write("2023-04-05,Food,invalid,Lunch\n")
-
-#     bt = BudgetTracker()
-#     with pytest.raises(ValueError):
-#         bt.load_from_file()
-# def test_monthly_report_multiple(capsys):
-#     bt = BudgetTracker()
-#     bt.add_transaction("2023-04-05", "Food", 25.50, "Lunch")
-#     bt.add_transaction("2023-04-06", "Transport", 10.00, "Bus ticket")
-#     bt.monthly_report("2023", "04")
-#     captured = capsys.readouterr()
-#     assert "- Lunch: $25.50" in captured.out
-#     assert "- Bus ticket: $10.00" in captured.out
-#     assert "Total: $35.50" in captured.out
