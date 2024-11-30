@@ -1,5 +1,6 @@
 from csv import reader, writer
 from collections import defaultdict
+import matplotlib.pyplot as plt
 from transaction import Transaction
 
 
@@ -61,3 +62,32 @@ class BudgetTracker:
                 monthly_total += t.amount
 
         print(f"Total: ${monthly_total:.2f}")
+
+    # PHASE 6: Data Visualization (Week 5)
+    def create_visualizations(self):
+        # Pie chart of spending by category
+        categories = [t.category for t in self.transactions]
+        amounts = [t.amount for t in self.transactions]
+
+        plt.figure(figsize=(10, 6))
+        plt.pie(amounts, labels=categories, autopct='%1.1f%%')
+        plt.title('Spending by Category')
+        plt.show()
+
+        # Monthly spending trend
+        # Add trend line visualization here
+
+    # PHASE 7: Advanced Features (Week 6)
+    # 1. Recurring Transactions:
+    def add_recurring_transaction(self, transaction, frequency):
+        # Add code for recurring transactions
+        pass
+
+    def generate_future_projections(self, months):
+        # Project future balance based on recurring transactions
+        pass
+
+    # 2. Export Reports:
+    def export_report(self, format_type='pdf'):
+        # Add code to export reports in different formats
+        pass
