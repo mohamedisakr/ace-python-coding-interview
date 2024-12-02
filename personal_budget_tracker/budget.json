@@ -1,0 +1,6 @@
+[
+    { "date": "2024-03-30", "category": "Groceries", "amount": 120.50, "type": "expense" },
+    { "date": "2024-03-29", "category": "Salary", "amount": 3000.00, "type": "income" },
+    { "date": "2024-03-28", "category": "Utilities", "amount": 95.20, "type": "expense" },
+    { "date": "2024-03-27", "category": "Entertainment", "amount": 50.00, "type": "expense" },
+]
