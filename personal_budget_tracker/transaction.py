@@ -14,5 +14,8 @@ class Transaction:
         self.amount = amount
         self.description = description
 
+    def __repr__(self): return f"date='{self.date}', category='{
+        self.category}', amount={self.amount}, description='{self.description}'"
+
 # except Exception as error:
 #     raise GetPipelinesError(json.dumps(       {"httpStatus": 400, "message": "Unable to fetch Pipelines"})) from error
