@@ -17,7 +17,7 @@ class TreeNode:
 
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        """Left->Root->Right"""
+        """Left -> Root -> Right"""
         nodes_values: list[int] = []
 
         def inorder(node: Optional[TreeNode]):
