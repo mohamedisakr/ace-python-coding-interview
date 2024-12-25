@@ -6,6 +6,14 @@ class TrieNode:
     def __init__(self):
         self.children: dict[str, TrieNode] = {}
         self.is_word = False
+        # self.children: Optional[dict[str, TrieNode]] = None
+
+    # def add_child(self, char: str) -> 'TrieNode':
+    #     if self.children is None:
+    #         self.children = {}
+    #     if char not in self.children:
+    #         self.children[char] = TrieNode()
+    #     return self.children[char]
 
 
 class Trie:
@@ -39,6 +47,17 @@ class Trie:
         for line in lines:
             self.insert(line)
 
+    def visualize(self) -> None:
+        def _visualize(node: TrieNode, indent: str) -> None:
+            for char, child in node.children.items():
+                print(f"{indent}{char}")
+                _visualize(child, indent + " ")
+
+            if node.is_word:
+                print(f"{indent}(word)")
+
+        _visualize(self.root, "")
+
 
 if __name__ == "__main__":
     content = ""
@@ -46,12 +65,20 @@ if __name__ == "__main__":
     with open('trie/wordsEn.txt', 'r') as file:
         content = file.read().splitlines()
 
-    # print(type(content))
-
     trie = Trie()
     trie.build_from_string_array(content)
-    print(trie)
+    trie.visualize()
 
+    # print(type(content))
+
+    # words = ["apple", "app", "banana", "band", "bandana"]
+    # trie.build_from_string_array(words)
+
+# def insert(self, word: str) -> None:
+#     node = self.root
+#     for char in word:
+#         node = node.add_child(char)
+#     node.is_word = True
     # """
     # trie.insert("apple")
     # print(trie.search("apple"))   # return True
