@@ -8,12 +8,14 @@ class TrieNode:
         self.is_word = False
         # self.children: Optional[dict[str, TrieNode]] = None
 
+    """
     # def add_child(self, char: str) -> 'TrieNode':
     #     if self.children is None:
     #         self.children = {}
     #     if char not in self.children:
     #         self.children[char] = TrieNode()
     #     return self.children[char]
+    """
 
 
 class Trie:
@@ -21,24 +23,24 @@ class Trie:
         self.root = TrieNode()
 
     def insert(self, word: str) -> None:
-        node = self.root
+        current = self.root
         for char in word:
-            if char not in node.children:
-                node.children[char] = TrieNode()
-            node = node.children[char]
-        node.is_word = True
+            if char not in current.children:
+                current.children[char] = TrieNode()
+            current = current.children[char]
+        current.is_word = True
 
     def _find_node(self, prefix: str) -> Optional[TrieNode]:
-        node = self.root
+        current = self.root
         for char in prefix:
-            if char not in node.children:
+            if char not in current.children:
                 return None
-            node = node.children[char]
-        return node
+            current = current.children[char]
+        return current
 
     def search(self, word: str) -> bool:
-        node = self._find_node(word)
-        return node is not None and node.is_word
+        current = self._find_node(word)
+        return current is not None and current.is_word
 
     def startsWith(self, prefix: str) -> bool:
         return self._find_node(prefix) is not None
