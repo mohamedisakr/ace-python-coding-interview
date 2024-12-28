@@ -1,31 +1,20 @@
-from typing import Optional, Tuple
-
-
-class TreeNode:
-    def __init__(self, value, left=None, right=None):
-        self._value = value
-        self._left = left
-        self._right = right
-
-    def left(self):
-        return self.left
-
-    def right(self):
-        return self.right
-
-    def value(self):
-        return self._value
-
-    def set_left(self, node):  # : Optional[TreeNode]
-        self._left = node
-
-    def set_right(self, node):
-        self._right = node
+from typing import Optional, Tuple, Type, Any
+from tree_node import TreeNode
 
 
 class BinarySearchTree:
+    """
+    Binary Search Tree (BST) implementation.
+    """
+
     def __init__(self):
         self._root: TreeNode = None
+
+    def __repr__(self) -> str:
+        return f'BinarySearchTree({str(self)})'
+
+    def __str__(self) -> str:
+        return TreeNode._node_str(self._root)
 
     def contains(self, val: int) -> Optional[Tuple[TreeNode, TreeNode]]:
         return self._search(val)
@@ -45,23 +34,3 @@ class BinarySearchTree:
                 current = current.right()
 
         return None, None
-
-    def find_max(self) -> Optional[Tuple[TreeNode, TreeNode]]:
-        parent = None
-        current = self._root
-
-        while current.right():
-            parent = current
-            current = current.right()
-
-        return current, parent
-
-    def find_min(self) -> Optional[Tuple[TreeNode, TreeNode]]:
-        parent = None
-        current = self._root
-
-        while current.left():
-            parent = current
-            current = current.left()
-
-        return current, parent
