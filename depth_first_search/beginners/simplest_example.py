@@ -1,6 +1,6 @@
 from typing import Optional, Tuple, Type, Any
 from tree_node import TreeNode
-from stacks.stack import MyStack
+from stacks.stack_grokking import Stack
 
 
 class BinarySearchTree:
@@ -102,7 +102,7 @@ class BinarySearchTree:
             traverses the tree using inorder traversal.
         """
         current = self._root
-        stack = MyStack()
+        stack = Stack()
         while current is not None or len(stack) > 0:
             if current is None:
                 current = stack.pop()
