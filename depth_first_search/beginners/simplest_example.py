@@ -16,10 +16,10 @@ class BinarySearchTree:
     def __str__(self) -> str:
         return TreeNode._node_str(self._root)
 
-    def contains(self, val: int) -> Optional[Tuple[TreeNode, TreeNode]]:
+    def contains(self, val: Any) -> Optional[Tuple[TreeNode, TreeNode]]:
         return self._search(val)
 
-    def _search(self, val: int) -> Optional[Tuple[TreeNode, TreeNode]]:
+    def _search(self, val: Any) -> Optional[Tuple[TreeNode, TreeNode]]:
         parent: TreeNode = None
         current: TreeNode = self._root
 
@@ -34,3 +34,57 @@ class BinarySearchTree:
                 current = current.right()
 
         return None, None
+
+    def insert(self, val: Any) -> None:
+        current: TreeNode = self._root
+
+        if current is None:
+            self._root = TreeNode(val)
+        else:
+            while current:
+                if val <= current.value():
+                    if not current.left():
+                        current.set_left(TreeNode(val))
+                        break
+                    current = current.left()
+                elif val > current.value():
+                    if not current.right():
+                        current.set_right(TreeNode(val))
+                        break
+                    current = current.right()
+
+    def delete(self, val: Any) -> None:
+        if self._root is None:
+            raise ValueError('Delete on an empty tree')
+
+        current, parent = self._search(val)
+
+        if current is None:
+            raise ValueError('Value not found')
+        if current.left() is None or current.right() is None:
+            child = current.right() if current.left() is None else current.left()
+            # The node has at most only one child
+            if parent is None:
+                self._root = child
+            elif val <= parent.value():
+                parent.set_left(val)
+            else:
+                parent.set_right(val)
+        else:  # The node N has two children.
+            # Find and remove the node M with the largest value in the left subtree of N.
+            max_node, max_node_parent = current.left().find_max_in_subtree()
+            if max_node_parent is None:  # M is the left child of N.
+                new_node = TreeNode(max_node.value(), None, current.right())
+            else:
+                new_node = TreeNode(
+                    max_node.value(), current.left(), current.right())
+                max_node_parent.set_right(max_node.left())
+            # Then  replace the node to be deleted with a new node with M.value(),
+            # and the same subtrees as N.
+            if parent is None:
+                # The node is the root
+                self._root = new_node
+            elif val <= parent.value():
+                parent.set_left(new_node)
+            else:
+                parent.set_right(new_node)
