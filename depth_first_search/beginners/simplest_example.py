@@ -1,5 +1,6 @@
 from typing import Optional, Tuple, Type, Any
 from tree_node import TreeNode
+from stacks.stack import MyStack
 
 
 class BinarySearchTree:
@@ -88,3 +89,28 @@ class BinarySearchTree:
                 parent.set_left(new_node)
             else:
                 parent.set_right(new_node)
+
+    def __iter__(self):
+        """
+        Iterate over the values in the BST.
+
+        Parameters:
+            None
+
+        Functionality:
+            Iterates over the values in the BST. The iteration starts at the root of the BST and
+            traverses the tree using inorder traversal.
+        """
+        current = self._root
+        stack = MyStack()
+        while current is not None or len(stack) > 0:
+            if current is None:
+                current = stack.pop()
+                yield current.value()
+                current = current.right()
+            else:
+                while current.left() is not None:
+                    stack.push(current)
+                    current = current.left()
+                yield current.value()
+                current = current.right()
