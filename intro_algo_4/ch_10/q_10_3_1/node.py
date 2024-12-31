@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Dict, Optional, List, Tuple
 
 
 class TreeNode:
@@ -8,18 +8,26 @@ class TreeNode:
         self._left: Optional[TreeNode] = None
         self._right: Optional[TreeNode] = None
 
+    @property
+    def left(self):
+        return self._left
 
-class BinaryTree:
-    def __init__(self) -> None:
-        self._root: Optional[TreeNode] = None
-        self._nodes: Dict[int, TreeNode] = None
+    @left.setter
+    def left(self, value):
+        self._left = value
 
-    def inorder(self) -> None:
-        def _inorder(node: Optional[TreeNode]) -> None:
-            if node:
-                self._inorder(node.left)
-                print(f"({node._index}) {node._key}")
-                self._inorder(node._right)
+    @property
+    def right(self):
+        return self._right
 
-        if self._root:
-            _inorder(self._root)
+    @right.setter
+    def right(self, value):
+        self._right = value
+
+    @property
+    def index(self):
+        return self._index
+
+    @property
+    def key(self):
+        return self._key
