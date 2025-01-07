@@ -38,6 +38,7 @@ def isSameStructure(a, b):
 if __name__ == '__main__':
     root1 = newNode(10)
     root2 = newNode(100)
+
     root1.left = newNode(7)
     root1.right = newNode(15)
     root1.left.left = newNode(4)
