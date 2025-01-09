@@ -256,8 +256,10 @@ class BinarySearchTree:
         return result
 
     def __str__(self):
-        """Return a string representing a binary search tree with nodes of the same depth in the same column.
-        If you tilt your head to the left, it should look like the nodes are positioned correctly."""
+        """Return a string representing a binary search tree with nodes of the same depth 
+        in the same column.
+        If you tilt your head to the left, it should look like the nodes are positioned correctly.
+        """
         return self.pretty_print(self.root)
 
 
