@@ -4,12 +4,20 @@ def gcd(a: int, b: int) -> int:
     return a
 
 
-cases = [
-    [35, 12],
-    [122, 39],
-    [63, 42],
-    [320, 80],
-    [462, 200]]
+def is_coprime(a: int, b: int) -> bool:
+    return gcd(a, b) == 1
 
-for a, b in cases:
-    print(gcd(a, b))
+
+# cases = [
+#     [35, 12],
+#     [122, 39],
+#     [63, 42],
+#     [320, 80],
+#     [462, 200]]
+
+# for a, b in cases:
+#     print(gcd(a, b))
+
+# (a) Use the Euclidean algorithm to show that 68 and 345 are relatively prime
+a, b = 68, 345
+print(f'{a} and {b} are relatively prime {is_coprime(a, b)}')
