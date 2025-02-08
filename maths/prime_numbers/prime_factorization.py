@@ -1,19 +1,9 @@
 from typing import List
-from math import sqrt, ceil
-
-
-def extract_twos(n: int) -> List[int]:
-    twos = []
-
-    while n % 2 == 0 and n != 0:
-        twos.append(2)
-        n //= 2
-
-    return twos
+from sieve import sieve_to_numbers
 
 
 def prime_factors(n: int) -> List[int]:
-    sq_root = (ceil(sqrt(n)))
+    sq_root = int((n**0.5) + 1)
     primes = []
 
     while n % 2 == 0 and n != 0:
@@ -39,5 +29,10 @@ def prime_factors(n: int) -> List[int]:
 
 
 # ex 02. Write 846 as a product of primes.
-num = 846
-print(f'{num} factors: {prime_factors(num)}')
+# num = 846
+# print(f'{num} factors: {prime_factors(num)}')
+
+# ex 03. Prove that a prime number can only give remainder 1 or 5 when divided by 6.
+primes = sieve_to_numbers(100)
+for num in primes:
+    print(f'{num} % 6 = {num % 6}')
