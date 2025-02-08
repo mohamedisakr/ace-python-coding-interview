@@ -28,13 +28,13 @@ def from_base_to_base10(number: str, base: int) -> int:
 
 
 # Example usage:
-base_number = "1A3"  # Example number in base 16 (hexadecimal)
-base = 16  # Specifying the base
-base10_number = from_base_to_base10(base_number, base)
-print(base10_number)  # Outputs: 419
+# base_number = "1A3"  # Example number in base 16 (hexadecimal)
+# base = 16  # Specifying the base
+# base10_number = from_base_to_base10(base_number, base)
+# print(base10_number)  # Outputs: 419
 
 
-def to_7(num: int) -> int:
+def to_base_7(num: int) -> int:
     if num == 0:
         return 0
 
@@ -46,7 +46,7 @@ def to_7(num: int) -> int:
     return int(base_7)
 
 
-def to_8(num: int) -> int:
+def to_base_8(num: int) -> int:
     if num == 0:
         return 0
     base_8 = ''
@@ -55,6 +55,19 @@ def to_8(num: int) -> int:
         num //= 8
     return int(base_8)
 
+
+def to_base_9(num: int) -> int:
+    if num == 0:
+        return 0
+    base_9 = ''
+    while num:
+        base_9 = str(num % 9) + base_9
+        num //= 9
+    return int(base_9)
+
+
+num = 531440
+print(to_base_9(num))  # correct: 888601
 
 # num = 862
 # print(to_7(num))
