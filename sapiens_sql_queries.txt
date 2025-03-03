@@ -1,0 +1,193 @@
+
+EMPLOYEES TABLE
+
+ID  NAME  DEPARTMENT    SALARY  EMPLOY_ID
+1001    Ivanov  SAPIEN    100000  1001
+1002    Petrov  SAPIEN    100000  1001
+1003    Sidorov TECHNOLOGIES 130000   1001
+1004    Korotkov    TECHNOLOGIES    120000  1001
+1005    Filev   SAPIEN 90000    1001
+1006    Smirnov REVOLT   125000 1001
+1007    Gods    REVOLT  125000    1001
+
+
+BUSINESS_TRIP TABLE
+
+ID  EMPLOY_ID DEP_DATE ARRIV_DATE   TRAV_EXPENS
+2001    1001    01.01.2014  10.01.2014    2000
+2002    1001    01.01.2015  10.01.2015    3000
+2003    1001    01.02.2015  10.03.2015    1500
+2004    1001    01.06.2015  10.07.2015    2900
+200     1001    01.07.2015     10.08.2015    3700
+2006    1001    01.01.2016  10.01.2016    5000
+2007    1001    01.04.2016  10.06.2016    1000
+2008    1001    01.07.2016  10.08.2016    5700
+200     1001    01.01.2017     10.01.2017    2100
+2010    1001    01.03.2017  10.04.2017    5000
+
+
+Question: What value will the sql script return ?
+
+
+SELECT SUM(b.trav_expens) AS SUM_TRAV_EXPENS
+FROM employees AS e LEFT JOIN business_trip AS b
+ON e.employ_id = b.employ_id
+WHERE e.salary > 90000 AND b.dep_date >= '2015-06-01'
+
+-------------------------
+
+DELIVERIES TABLE
+
+DOCID   ITEMID DATE_DELIVERY    QUANT
+1001    1   01.01.2019 5
+1001    2   01.01.2019 15
+1002    1   02.01.2019 23
+1002    2   02.01.2019 11
+1002    3   02.01.2019 7
+1002    4   02.01.2019 21
+1003    1   04.01.2019 11
+1003    2   04.01.2019 12
+1003    3   04.01.2019 36
+1004    1   02.01.2019 28
+
+STATUS_DELIVERY TABLE
+
+DOCID   ITEMID STATUS_TYPE  STATUS_POS
+1001    1   Acceptance at the warehouse    Completed
+1004    1   Acceptance at the warehouse    Completed
+1004    1   Unloading  Completed
+1001    1   Warehouse action   Not started
+1001    1   Execution  Completed
+1002    1   Unloading  Completed
+1002    2   Acceptance at the warehouse    Not started
+1002    1   Admission  Completed
+1001    1   Admission  Completed
+1001    2   Acceptance at the warehouse    Completed
+1001    1   Unloading  Completed
+1002    1   Warehouse action   Completed
+1004    3   Admission  Not started
+1002    1   Acceptance at the warehouse    Completed
+1004    1   Warehouse action   Completed
+1004    2   Admission  Not started
+1004    1   Admission  Completed
+
+Question: What value will the sql script return?
+
+
+SELECT SUM(fact.quant) 
+FROM (SELECT 
+    docid,
+    itemid,   
+    SUM(CASE 
+          WHEN status_type IN ('Warehouse Receipt','Unloading','Warehouse Action','Receipt') AND status_pos = 'Completed' THEN 1 
+        END) AS flag
+    FROM status_delivery
+    GROUP BY docid, itemid
+    ) AS stat
+LEFT JOIN deliveries AS fact
+ON stat.docid = fact.docid
+  AND stat.itemid = fact.itemid
+    AND stat.flag = 4;
+
+    -----------
+
+INTERNET TABLE
+
+PUR_DATE    IM  SKD   PRICE
+02.02.2021  ZOOSHOP   1  5000
+04.02.2021  ZOOSHOP   1  5000
+05.02.2021  ZOOSHOP   2  3700
+08.02.2021  ZOOSHOP   2  3700
+09.02.2021  ZOOSHOP   3  1800
+13.02.2021  PROMARKET 1    6000
+14.02.2021  PROMARKET 4    2200
+
+Question: What value will the sql script return?
+
+   SELECT (SELECT SUM(PRICE)
+                  FROM INTERNET
+                  WHERE PUR_DATE <= T1.PUR_DATE) COSTS
+   FROM INTERNET T1
+   ORDER BY IM, PUR_DATE
+   OFFSET 1 ROWS FETCH NEXT 1 ROWS ONLY;
+
+
+--------
+
+SHOPS TABLE
+SHOP	 DOC_NUMBER 	DAY	SHIPMENT
+1220	1123-4553-08	27.12.2021	COU
+1221	0811-4553-08	24.11.2021	PNT
+1222	0043-4553-14	25.12.2021	LCTN
+1320	2333-4553-16	20.10.2021	PNT
+1330	1000-4553-10	27.12.2021	COU
+1450	0999-4553-14	26.09.2021	PNT
+1520	1499-4553-08	22.12.2021	COU
+
+WAREHOUSE TABLE
+WAREHOUSE	ID	DOCUMENT	MONTH
+ 	11231521	 	0
+ 	08111221	 	0
+ 	00431022	 	0
+ 	23331320	 	0
+ 	10001330	 	0
+ 	09991450	 	0
+ 	14991520	 	0
+
+Necessary transformations:
+
+WITH T1 AS (SELECT SHOPS.SHOP FROM SHOPS JOIN WAREHOUSE 
+            ON SUBSTRING(WAREHOUSE.ID, 5, 4) = SHOPS.SHOP)
+UPDATE WAREHOUSE
+SET WAREHOUSE = 
+    CASE 
+    WHEN WAREHOUSE.WAREHOUSE = '' AND SUBSTRING(WAREHOUSE.ID, 5, 4) IN (SELECT SHOP FROM T1)
+    THEN (SELECT SUBSTRING(SHOPS.DOC_NUMBER, 11, 2) FROM SHOPS WHERE SUBSTRING(WAREHOUSE.ID, 5, 4) =
+ SHOPS.SHOP)
+    END,
+    DOCUMENT = 
+    CASE 
+    WHEN WAREHOUSE.DOCUMENT = '' AND SUBSTRING(WAREHOUSE.ID, 5, 4) IN (SELECT SHOP FROM T1)
+    THEN (SELECT (SUBSTRING(SHOPS.DOC_NUMBER, 6, 7) + '-' + SUBSTRING(CAST(SHOPS.DAY AS CHAR), 6, 5)) FROMSHOPS WHERE SUBSTRING(WAREHOUSE.ID, 5, 4) = SHOPS.SHOP)
+    END,
+    MONTH = 
+    CASE 
+    WHEN WAREHOUSE.MONTH = 0 AND SUBSTRING(WAREHOUSE.ID, 5, 4) IN (SELECT SHOP FROM T1)
+    THEN (SELECT (SUBSTRING(CAST(SHOPS.DAY AS CHAR), 6, 2)) FROM SHOPS WHERE SUBSTRING(WAREHOUSE.ID, 5, 4)= SHOPS.SHOP)
+    END
+
+Question: What value will the sql script return?
+
+SELECT COUNT(WAREHOUSE) FROM WAREHOUSE
+WHERE WAREHOUSE IS NOT NULL AND SUBSTRING(WAREHOUSE.DOCUMENT, 12, 2) >= 24;    
+
+-------
+
+Question: What value will the sql script return?
+
+CREATE TABLE employees (
+  id INT,
+  name VARCHAR(50),
+  department VARCHAR(50),
+  salary INT
+);
+
+INSERT INTO Employees (Id, Name, Salary, department)
+VALUES
+    (1, 'Ivanov', 100000, 'SAPIENS'),
+    (2, 'Petrov', 100000, 'SAPIENS'),
+    (3, 'Sidorov', 130000, 'TECHNOLOGIES'),
+    (4, 'Korotkov', 120000, 'TECHNOLOGIES'),
+    (5, 'Filev', 90000, 'SAPIENS'),
+    (6, 'Smirnov', 125000, 'REVOLT'),
+    (7, 'Godov', 125000, 'REVOLT') ;
+
+SELECT (AVG(ROW_NUMBER) + SUM(RANK) + SUM(DENSE_RANK))
+FROM (SELECT
+      DEPARTMENT
+    , SALARY
+    , ROW_NUMBER() OVER(PARTITION BY DEPARTMENT ORDER BY SALARY DESC) AS 'ROW_NUMBER'
+    , RANK() OVER(PARTITION BY DEPARTMENT ORDER BY SALARY DESC) AS 'RANK'
+    , DENSE_RANK() OVER(PARTITION BY DEPARTMENT ORDER BY SALARY DESC) AS 'DENSE_RANK'
+    FROM EMPLOYEES) AS T1
+WHERE DEPARTMENT LIKE '%A__E%';
