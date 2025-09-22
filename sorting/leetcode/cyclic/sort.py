@@ -42,5 +42,20 @@ def main():
         print("-" * 85)
 
 
+def missing():
+    nums = [
+        [1],
+        # [1, 2, 0],
+        [4, 2, 3, 1],
+        [8, 3, 5, 2, 4, 6, 7, 1]
+    ]
+
+    for i in range(len(nums)):
+        print(i + 1, ".\tArray before cyclic sort = ", nums[i], sep="")
+        print("\tArray after cyclic sort = ", cyclic_sort(nums[i]), sep="")
+        print("-" * 85)
+
+
 if __name__ == '__main__':
-    main()
+    # main()
+    missing()
