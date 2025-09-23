@@ -9,7 +9,7 @@ def ordered_counter(iterable):
     return counter
 
 
-def findFirstUnique(arr: List[int]) -> Optional[int]:
+def find_first_unique(arr: List[int]) -> Optional[int]:
     """
     Returns the first unique integer in the array using OrderedDict for order-preserving frequency count.
 
