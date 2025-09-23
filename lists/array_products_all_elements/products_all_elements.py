@@ -43,7 +43,9 @@ def suffix_product(arr: List[int]) -> List[int]:
     return suf
 
 
-arr = [1, 2, 3, 4]
+# arr = [1, 2, 3, 4]
+# print(f'product: \t{find_product(arr)}')
+
+
 # print(f'prefix: \t{prefix_product(arr)}')
 # print(f'suffix: \t{suffix_product(arr)}')
-print(f'product: \t{find_product(arr)}')
