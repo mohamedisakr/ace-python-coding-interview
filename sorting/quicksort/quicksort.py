@@ -1,4 +1,6 @@
+from random import randint
 # Lomuto Partition Scheme (In-Place)
+
 
 def quicksort(arr, low, high):
     if low < high:
@@ -8,6 +10,8 @@ def quicksort(arr, low, high):
 
 
 def partition(arr, low, high):
+    pivot_index = randint(low, high)
+    arr[pivot_index], arr[high] = arr[high], arr[pivot_index]  # swap pivot to end
     pivot = arr[high]
     i = low  # boundary for elements < pivot
     for j in range(low, high):
