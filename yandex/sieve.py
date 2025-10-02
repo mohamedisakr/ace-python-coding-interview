@@ -22,7 +22,7 @@ def half_sieve(num: int) -> list[int]:
     Auxiliary Space:
         O(n/2) — includes the boolean array for odd-number primality and the output list of primes.
 
-    Optimization Grade Insight:
+    Optimization Insight:
         - Skips even numbers after 2 to halve memory and iteration cost.
         - Starts marking from i² to avoid redundant composite marking.
         - Appends primes incrementally during sieving to avoid post-processing.
