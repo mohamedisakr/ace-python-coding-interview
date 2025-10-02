@@ -5,7 +5,7 @@ from typing import List
 
 
 class Solution:
-    def buildArray(self, nums: list[int]) -> list[int]:
+    def buildArray(self, nums: List[int]) -> List[int]:
         n = len(nums)
 
         for i, num in enumerate(nums):
