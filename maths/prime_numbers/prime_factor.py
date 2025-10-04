@@ -18,6 +18,6 @@ def factor(num: int) -> List[int]:
     return primes
 
 
-num = 130
+num = 6469693231  # 130
 primes = factor(num)
 print(primes)
