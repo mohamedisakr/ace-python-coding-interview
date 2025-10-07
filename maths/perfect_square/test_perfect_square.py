@@ -43,6 +43,3 @@ class TestPerfectSquare(TestCase):
 # ✅ Run the tests
 if __name__ == '__main__':
     main()
-
-# Run the test suite
-# test_is_perfect_square()
