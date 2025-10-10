@@ -15,5 +15,5 @@ def sort(nums: List[int]):
     return nums
 
 
-nums = [5, 1, 4, 2, 8]
-print(sort(nums))
+# nums = [5, 1, 4, 2, 8]
+# print(sort(nums))
