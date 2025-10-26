@@ -9,9 +9,9 @@ def inverted_index(text: str) -> dict[str, list[int]]:
 
 
 # test case
-text = "we dont need no education we dont need no thought control no we dont"
-index = inverted_index(text)
-print(index)
+# text = "we dont need no education we dont need no thought control no we dont"
+# index = inverted_index(text)
+# print(index)
 # print(index["dont"])
 # assert procedure(text, "dont") == [1, 6, 13]
 
