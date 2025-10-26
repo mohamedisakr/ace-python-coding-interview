@@ -1,7 +1,8 @@
 from collections import defaultdict
+from typing import List
 
 
-def inverted_index(text: str) -> dict[str, list[int]]:
+def inverted_index(text: str) -> dict[str, List[int]]:
     index = defaultdict(list)
     for idx, word in enumerate(text.split()):
         index[word].append(idx)
@@ -9,10 +10,10 @@ def inverted_index(text: str) -> dict[str, list[int]]:
 
 
 # test case
-# text = "we dont need no education we dont need no thought control no we dont"
-# index = inverted_index(text)
-# print(index)
-# print(index["dont"])
+text = "we dont need no education we dont need no thought control no we dont"
+index = inverted_index(text)
+print(index)
+print(index["dont"])
 # assert procedure(text, "dont") == [1, 6, 13]
 
 
