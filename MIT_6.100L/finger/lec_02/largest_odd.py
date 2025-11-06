@@ -2,6 +2,12 @@ from typing import List
 
 
 def largest_odd(nums: List[int]) -> int | None:
+    if not isinstance(nums, list) or len(nums) != 10:
+        raise ValueError("Input must be a list of exactly 10 integers.")
+
+    if not all(isinstance(n, int) for n in nums):
+        raise TypeError("All elements must be integers.")
+
     max_odd = None
     for num in nums:
         if num % 2 != 0:
