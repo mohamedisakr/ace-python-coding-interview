@@ -16,7 +16,6 @@ print(index)
 print(index["dont"])
 # assert procedure(text, "dont") == [1, 6, 13]
 
-
 # def inverted_index(text: str) -> dict:
 #     index = {}
 #     words = text.split(" ")
