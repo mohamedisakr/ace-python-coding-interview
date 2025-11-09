@@ -1,0 +1,15 @@
+def find_root_power(num: int) -> None:
+    found = False
+    for pwr in range(2, 6):
+        for root in range(-abs(num), abs(num) + 1):
+            print(f"root = {root}")
+            if root ** pwr == num:
+                print(f"root = {root}, pwr = {pwr}")
+                found = True
+                return
+    if not found:
+        print("No pair of integers (root, pwr) found such that root**pwr ==", num)
+
+
+num = 27
+find_root_power(num)
