@@ -14,3 +14,21 @@ def is_prime(num: int) -> bool:
         if num % divisor == 0:
             return False
     return True
+
+
+def sieve(limit: int) -> list[int]:
+    # Use a Sieve for Bulk Prime Detection
+    primes = [False, False] + [True] * (limit - 1)
+    for i in range(2, int(limit ** 0.5) + 1):
+        if primes[i]:
+            for j in range(i * i, limit + 1, i):
+                primes[j] = False
+    return [i for i in range(3, limit) if is_prime[i]]
+
+
+def sum_primes(lo: int, hi: int) -> int:
+    total = 0
+    for num in range(lo, hi, 2):
+        if is_prime(num):
+            total += num
+    return total
