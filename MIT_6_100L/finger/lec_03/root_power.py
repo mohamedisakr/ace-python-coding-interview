@@ -1,12 +1,26 @@
-def find_root_power(num: int) -> tuple[int, int] | None:
-    if not isinstance(num, int):
+def find_root_power(x: int) -> tuple[int, int] | None:
+    if not isinstance(x, int):
         raise TypeError("Input must be an integer.")
 
-    for pwr in range(2, 6):
-        for root in range(-abs(num), abs(num) + 1):
-            if root ** pwr == num:
+    for root in range(-abs(x), abs(x) + 1):
+        for pwr in range(2, 6):
+            if root ** pwr == x:
                 return root, pwr
     return None
+
+
+# def find_root_power(num: int) -> tuple[int, int] | None:
+#     if not isinstance(num, int):
+#         raise TypeError("Input must be an integer.")
+
+#     for pwr in range(2, 6):
+#         for root in range(1, abs(num) + 1):
+#             if root ** pwr == num:
+#                 return root, pwr
+#             if (-root) ** pwr == num:
+#                 return -root, pwr
+
+#     return None
 
 
 # def find_root_power(num: int) -> None:
