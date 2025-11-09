@@ -8,7 +8,9 @@ def is_prime(n: int) -> bool:
     if n % 2 == 0 or n % 3 == 0:
         return False
 
-# for divisor in range(5, divisor * divisor <= n, 6)
+    # limit = int(n ** 0.5) + 1
+    # for divisor in range(5, divisor * divisor <= n, 6)
+
     i = 5
     while i * i <= n:
         if n % i == 0 or n % (i + 2) == 0:
