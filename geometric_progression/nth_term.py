@@ -1,3 +1,8 @@
+def calculate_gp_nth_term(a, r, n):
+    """Mathematical formula for the n-th term of a GP."""
+    return a * (r ** (n - 1))
+
+
 def find_nth_term_from_series(series, n):
     """
     Calculates the n-th term of a GP based on a provided list.
@@ -7,7 +12,7 @@ def find_nth_term_from_series(series, n):
 
     a = series[0]
     r = series[1] / a
-    return a * (r ** (n-1))
+    return calculate_gp_nth_term(a, r, n)
 
 
 my_series = [5, 10, 20, 40]
