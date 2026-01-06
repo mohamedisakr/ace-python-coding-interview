@@ -1,28 +1,14 @@
-01. Bisection Method.mp4
-02. Newton's Method.mp4
-03. Secant Method.mp4
-04. False Position Method - Regula Falsi.mp4
-05. Fixed Point Iteration.mp4
-06. Fixed Point Iteration Q&A.mp4
-07. Steffensen's Method with Aitken's Δ².mp4
-08. Wegstein's Method.mp4
-09. Horner's Method.mp4
-10. Muller's Method.mp4
-11. Brent's Method.mp4
-12. Newton Bisection Hybrid (Newt-Safe).mp4
-13. Newton's Method Interval of Convergence.mp4
-14. Finite Difference Method.mp4
-15. Newton Fractals.mp4
-16. Durand-Kerner Method.mp4
-17. Aberth-Ehrlich Method.mp4
-18. Laguerre's Method.mp4
-19. Halley's Method.mp4
-20. Householder's Method.mp4
-21. Video Mistakes and How to Fix Them.mp4
-22. What is Order of Convergence_.mp4
-23. Global Newton's Method - It Always Converges.mp4
-24. Graeffe's Method.mp4
-25. Bairstow's Method.mp4
-26. Jenkins-Traub- How Computers Find Polynomial Roots #SoMEpi.mp4
-27. Bernoulli's Method with QD.mp4
-28. Lehmer-Schur Algorithm #SoME4.mp4
+01. Introduction
+02. How Udemy Works
+03. Choosing a Topic
+04. Getting to Work
+05. Recording Your Course
+06. Post-Production
+07. Udemy SEO Tips
+08. Pre-Launch Planning
+09. Marketing Your Course
+10. Maintaining Your Course
+11. Licensing Your Course
+12. Udemy Full Time
+13. Wrapping Up
+Readme.txt
