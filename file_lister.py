@@ -1,6 +1,6 @@
 from os import listdir
 
-directory_path = r"J:\Videos\Udemy\Udemy The Ultimate Unofficial Udemy Online Course Creation Guide 2024-8"
+directory_path = r"J:\Videos\Algorithms\Udacity Intro to Computer Science"
 files = listdir(directory_path)
 print(f'# of files: {len(files)}')
 file_names = [fname for fname in files]  # if fname.endswith('.mp4')]
