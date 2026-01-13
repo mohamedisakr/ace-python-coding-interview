@@ -1,6 +1,6 @@
-# # In Problems 1 to 7, use Newton’s method to solve
-# # the equations given to the accuracy stated.
-# # x^2 − 2x − 13 = 0, correct to 3 decimal places.
+# In Problems 1 to 7, use Newton’s method to solve
+# the equations given to the accuracy stated.
+# 3x^3 −10x = 14, correct to 4 significant figures.
 def newton_method(f, df, x0, tol=1e-5, max_iter=100):
     """
     Solves f(x) = 0 using Newton's method.
@@ -13,10 +13,10 @@ def newton_method(f, df, x0, tol=1e-5, max_iter=100):
     :return: The root of the equation
     """
     xn = x0
-    for n in range(0, max_iter):
+    for i in range(0, max_iter):
         fxn = f(xn)
         if abs(fxn) < tol:
-            print(f"Found solution after {n} iterations.")
+            print(f"Found solution after {i} iterations.")
             return xn
 
         dfxn = df(xn)
@@ -30,34 +30,15 @@ def newton_method(f, df, x0, tol=1e-5, max_iter=100):
     print("Exceeded maximum iterations. No solution found.")
     return None
 
-# --- Application to your specific equation: x^2 - 2x - 13 = 0 ---
-
-
-# --- Application to your specific equation: x^2 - 2x - 13 = 0 ---
+# --- Application to your specific equation: 3x^3 −10x = 14 ---
 
 # Define the function and its derivative
-def f(x): return x**2 - 2*x - 13
-def df(x): return 2*x - 2
+
+
+def f(x): return (3*x**3 - 10*x - 14)
+def df(x): return (9*x**2 - 10)
 
 
 # Solve for the positive root starting at x=5
 root = newton_method(f, df, x0=5, tol=0.0005)
 print(f"Root: {root:.3f}")
-
-
-# def f(x):
-#     return x**2 - 2*x - 13
-
-
-# def f_prime(x):
-#     return 2*x - 2  # 2*(x - 1)
-
-
-# def newton(x):
-#     return x - (f(x)/f_prime(x))
-
-
-# print(newton(4))
-
-# # for x in range(-10, 11):
-# #     print(f"x: {x}, f(x) : {f(x)}")
