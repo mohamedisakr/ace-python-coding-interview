@@ -51,10 +51,34 @@ print("Testing Discontinuous Function:")
 print(bisection_method_safe(trap_func, 1, 3))
 
 # Bouncing Root	(x−2)2	[1,3]	Touches 0 but doesn't cross it.'
-def
+
+
+def bouncing_root(x):
+    return (x-2)**2
+
+
+print("Testing Bouncing Root:")
+print(bisection_method_safe(bouncing_root, 1, 3))
+
 # No Real Root	x2+4	[−1,1]	Function is always positive.
+
+
+def no_real_root(x):
+    return x**2 + 4
+
+
+print("Testing No Real Root:")
+print(bisection_method_safe(no_real_root, -1, 1))
 # Even No. of Roots	cos(x)	[0,2π]	Crosses twice, ending where it started.
 
+
+def even_no_of_roots(x):
+    from math import cos
+    return cos(x)
+
+
+print("Testing Even No. of Roots:")
+print(bisection_method_safe(no_real_root, 0, 2*math.pi))
 
 # def bisection_method(func, a, b, tolerance=1e-6, max_iterations=100):
 #     """
