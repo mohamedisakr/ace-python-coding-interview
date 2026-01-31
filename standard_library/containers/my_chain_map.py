@@ -41,6 +41,14 @@ class MyChainMap:
         # Creates a new scope (S_0) above the current ones
         return MyChainMap(m or {}, *self.maps)
 
+    def __iter__(self):
+        seen = set()
+        for mapping in self.maps:
+            for key in mapping:
+                if key not in seen:
+                    yield key
+                    seen.add(key)
+
     @property
     def parents(self):
         # Returns the 'tail' of the list (all layers except the first)
