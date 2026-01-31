@@ -49,6 +49,14 @@ class MyChainMap:
                     yield key
                     seen.add(key)
 
+    def __len__(self):
+        # We create a temporary set of the union of all keys.
+        # Python's set.update() is significantly faster than a manual loop.
+        unique_keys = set()
+        for mapping in self.maps:
+            unique_keys.update(mapping)
+        return len(unique_keys)
+
     @property
     def parents(self):
         # Returns the 'tail' of the list (all layers except the first)

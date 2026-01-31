@@ -54,6 +54,21 @@ class TestMyChainMap(unittest.TestCase):
         # The first 'b' seen is the one from local_layer
         self.assertEqual(keys, ['b', 'a'])
 
+    def test_length_calculation(self):
+        """Math: len(S1 ∪ S2) = len(S1) + len(S2) - len(S1 ∩ S2)"""
+        # global_layer = {'a': 1, 'b': 2}
+        # local_layer  = {'b': 99}
+        # Union is {'a', 'b'}, so length should be 2.
+        self.assertEqual(len(self.cm), 2)
+
+        # Add a new unique key to a deeper layer
+        self.global_layer['z'] = 100
+        self.assertEqual(len(self.cm), 3)
+
+        # Shadow an existing key in the top layer
+        self.cm['a'] = 0  # 'a' was already in global, now it's in local too
+        self.assertEqual(len(self.cm), 3)  # Length should remain 3
+
 
 if __name__ == '__main__':
     unittest.main()
