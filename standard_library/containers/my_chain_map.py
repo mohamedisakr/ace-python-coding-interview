@@ -32,10 +32,10 @@ class MyChainMap:
         # we can't delete what isn't in the top layer.
         try:
             del self.maps[0][key]
-        except KeyError:
+        except KeyError as exc:
+            raise KeyError(f"Key {key} not found in the first layer.") from exc
+        # except KeyError:
             # raise KeyError(f"Key {key} not found in the first layer.")
-            # raise KeyError(f"Key 'secret_key' not found in the first layer.") from exc
-            raise KeyError(f"Key {key} not found in the first layer.")
 
     def new_child(self, m=None):
         # Creates a new scope (S_0) above the current ones
