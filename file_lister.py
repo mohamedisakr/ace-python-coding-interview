@@ -24,7 +24,7 @@ def list_video_names(directory_path: str) -> List[str]:
 
 
 # Example usage:
-video_names = list_video_names(r"J:\Videos\Algebra\TTC Algebra II")
+video_names = list_video_names(r"J:\Videos\Calculus\TTC Mathematics Describing the Real World Precalculus and Trigonometry")
 for vid_name in video_names:
     print(vid_name)
 
