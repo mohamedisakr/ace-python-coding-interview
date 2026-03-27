@@ -35,6 +35,38 @@ class LogicEngine:
 
         return categorized
 
+    def shunting_yard(self, categorized_tokens):
+        output_queue = []
+        operator_stack = []
+
+        for kind, value in categorized_tokens:
+            if kind == "VARIABLE":
+                # Variables go straight to the output
+                output_queue.append(value)
+
+            elif kind == "OPERATOR":
+                # While there's an operator on the stack with HIGHER or EQUAL precedence
+                # pop it to the output before adding the new one
+                while (operator_stack and operator_stack[-1] != '(' and
+                       self.GATES[operator_stack[-1]]['prec'] >= self.GATES[value]['prec']):
+                    output_queue.append(operator_stack.pop())
+                operator_stack.append(value)
+
+            elif value == "(":
+                operator_stack.append(value)
+
+            elif value == ")":
+                # Pop everything until we find the matching opening parenthesis
+                while operator_stack and operator_stack[-1] != '(':
+                    output_queue.append(operator_stack.pop())
+                operator_stack.pop()  # Remove the '('
+
+        # Clean up any remaining operators
+        while operator_stack:
+            output_queue.append(operator_stack.pop())
+
+        return output_queue
+
 
 # --- Testing the Class ---
 engine = LogicEngine()
