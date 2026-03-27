@@ -1,4 +1,5 @@
 from re import findall
+from itertools import product
 
 
 class LogicEngine:
@@ -89,21 +90,55 @@ class LogicEngine:
 
         return stack[0]
 
+    def generate_table(self, expression_str):
+        # 1. Prepare the engine
+        tokens = self.tokenize(expression_str)
+        postfix = self.shunting_yard(tokens)
+
+        # Sort variables alphabetically for a consistent table header
+        sorted_vars = sorted(list(self.variables))
+
+        # 2. Print Header
+        # Create a format string for equal spacing
+        col_width = 5
+        header = " | ".join([f"{v:^{col_width}}" for v in sorted_vars])
+        header += f" | {expression_str}"
+        print(header)
+        print("-" * len(header))
+
+        # 3. Generate 2^n combinations
+        combinations = product([True, False], repeat=len(sorted_vars))
+
+        for combo in combinations:
+            # Map the T/F values to their variable names
+            var_map = dict(zip(sorted_vars, combo))
+
+            # Calculate the result
+            result = self.evaluate(postfix, var_map)
+
+            # 4. Format the row
+            # Convert True/False to 1/0 for a cleaner look
+            row_values = [f"{int(v):^{col_width}}" for v in combo]
+            row_str = " | ".join(row_values)
+            print(f"{row_str} | {int(result)}")
+
 
 # --- Testing the Class ---
 # Setup
 engine = LogicEngine()
-expression = "A AND (B OR C)"
-tokens = engine.tokenize(expression)
-postfix = engine.shunting_yard(tokens)
+expression = "(A AND B) OR NOT C"
+engine.generate_table(expression)
 
-# Simulation: If A=True, B=False, C=True
-current_values = {'A': True, 'B': False, 'C': True}
+# tokens = engine.tokenize(expression)
+# postfix = engine.shunting_yard(tokens)
 
-# Run the engine
-result = engine.evaluate(postfix, current_values)
+# # Simulation: If A=True, B=False, C=True
+# current_values = {'A': True, 'B': False, 'C': True}
 
-print(f"Expression: {expression}")
-print(f"Postfix:    {postfix}")
-print(f"Input:      {current_values}")
-print(f"Result:     {result}")
+# # Run the engine
+# result = engine.evaluate(postfix, current_values)
+
+# print(f"Expression: {expression}")
+# print(f"Postfix:    {postfix}")
+# print(f"Input:      {current_values}")
+# print(f"Result:     {result}")
