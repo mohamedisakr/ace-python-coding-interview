@@ -11,28 +11,48 @@ class LogicEngine:
             'AND': {'func': lambda a, b: a and b, 'arity': 2, 'prec': 2},
             'OR':  {'func': lambda a, b: a or b,  'arity': 2, 'prec': 1},
             'XOR': {'func': lambda a, b: a != b,  'arity': 2, 'prec': 1},
+            # precedence to 0 because these are usually evaluated last, after all ANDs and ORs.
+            'IMPLIES': {'func': lambda a, b: (not a) or b, 'arity': 2, 'prec': 0},
+            'EQUIV':   {'func': lambda a, b: a == b,       'arity': 2, 'prec': 0}
+        }
+        # 2. The Normalization Map (Synonyms)
+        self.SYNONYMS = {
+            '&': 'AND', '&&': 'AND',
+            '|': 'OR',  '||': 'OR',
+            '!': 'NOT', '~': 'NOT',
+            '^': 'XOR',
+            '->': 'IMPLIES', '=>': 'IMPLIES',
+            '<->': 'EQUIV',  '<=>': 'EQUIV'
         }
         self.variables = set()
         self.tokens = []
 
     def tokenize(self, expression):
         # 1. Regex to split string into parts
-        raw_tokens = findall(r'\w+|[()&|!^]', expression)
+        # Updated Regex to handle multi-character symbols like <-> and ->
+        raw_tokens = findall(r'<->|->|=>|<=|==|\w+|[()&|!^~]', expression)
+        # Updated regex to catch -> and <->
+        # raw_tokens = findall(r'<->|->|\w+|[()&|!^]', expression)
+        # raw_tokens = findall(r'\w+|[()&|!^]', expression)
         self.tokens = [t.upper() for t in raw_tokens]
 
         # 2. Identify variables vs operators
         self.variables.clear()
         categorized = []
 
-        for t in self.tokens:
-            if t in self.GATES:
-                categorized.append(("OPERATOR", t))
-            elif t in "()":
-                categorized.append(("PAREN", t))
+        for t in raw_tokens:
+            t_upper = t.upper()
+
+            # 3. Use the Normalization Map here
+            actual_token = self.SYNONYMS.get(t_upper, t_upper)
+
+            if actual_token in self.GATES:
+                categorized.append(("OPERATOR", actual_token))
+            elif actual_token in "()":
+                categorized.append(("PAREN", actual_token))
             else:
-                # If it's not a gate or paren, it's a variable
-                self.variables.add(t)
-                categorized.append(("VARIABLE", t))
+                self.variables.add(actual_token)
+                categorized.append(("VARIABLE", actual_token))
 
         return categorized
 
@@ -126,7 +146,8 @@ class LogicEngine:
 # --- Testing the Class ---
 # Setup
 engine = LogicEngine()
-expression = "(A AND B) OR NOT C"
+# expression = "(A AND B) OR NOT C"
+expression = "(A & B) -> (C <-> A)"
 engine.generate_table(expression)
 
 # tokens = engine.tokenize(expression)
