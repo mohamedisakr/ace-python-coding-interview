@@ -3,12 +3,13 @@ from re import findall
 
 class LogicEngine:
     def __init__(self):
-        # Define the gates and their metadata
+        # We add 'prec' (Precedence) to each gate
+        # Higher number = higher priority
         self.GATES = {
-            'AND': {'func': lambda a, b: a and b, 'arity': 2},
-            'OR':  {'func': lambda a, b: a or b, 'arity': 2},
-            'NOT': {'func': lambda a: not a,      'arity': 1},
-            'XOR': {'func': lambda a, b: a != b, 'arity': 2}
+            'NOT': {'func': lambda a: not a,      'arity': 1, 'prec': 3},
+            'AND': {'func': lambda a, b: a and b, 'arity': 2, 'prec': 2},
+            'OR':  {'func': lambda a, b: a or b,  'arity': 2, 'prec': 1},
+            'XOR': {'func': lambda a, b: a != b,  'arity': 2, 'prec': 1},
         }
         self.variables = set()
         self.tokens = []
