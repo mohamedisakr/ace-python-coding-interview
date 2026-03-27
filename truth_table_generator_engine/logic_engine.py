@@ -67,13 +67,43 @@ class LogicEngine:
 
         return output_queue
 
+    def evaluate(self, postfix_tokens, var_map):
+        stack = []
+
+        for token in postfix_tokens:
+            if token in self.GATES:
+                # 1. Get the gate metadata
+                gate = self.GATES[token]
+
+                # 2. Pop the necessary number of arguments (Arity)
+                # Note: Pop order is reversed (Right then Left)
+                args = [stack.pop() for _ in range(gate['arity'])]
+                args.reverse()
+
+                # 3. Apply the function and push result back
+                result = gate['func'](*args)
+                stack.append(result)
+            else:
+                # It's a variable, push its True/False value from the map
+                stack.append(var_map[token])
+
+        return stack[0]
+
 
 # --- Testing the Class ---
+# Setup
 engine = LogicEngine()
-expression = "(A AND B) OR NOT C"
-structured_tokens = engine.tokenize(expression)
+expression = "A AND (B OR C)"
+tokens = engine.tokenize(expression)
+postfix = engine.shunting_yard(tokens)
 
-print(f"Variables found: {sorted(list(engine.variables))}")
-print("Token Stream:")
-for kind, value in structured_tokens:
-    print(f"  {kind:10} : {value}")
+# Simulation: If A=True, B=False, C=True
+current_values = {'A': True, 'B': False, 'C': True}
+
+# Run the engine
+result = engine.evaluate(postfix, current_values)
+
+print(f"Expression: {expression}")
+print(f"Postfix:    {postfix}")
+print(f"Input:      {current_values}")
+print(f"Result:     {result}")
