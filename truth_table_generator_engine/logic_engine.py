@@ -1,5 +1,7 @@
 from re import findall
 from itertools import product
+from csv import writer
+from os import makedirs, path
 
 
 class LogicEngine:
@@ -110,6 +112,28 @@ class LogicEngine:
 
         return stack[0]
 
+    def evaluate_with_history(self, postfix, var_map):
+        stack = []
+        history = {}
+        for token in postfix:
+            if token in self.GATES:
+                gate = self.GATES[token]
+                args = [stack.pop() for _ in range(gate['arity'])]
+                args.reverse()
+
+                vals = [a['val'] for a in args]
+                labels = [a['label'] for a in args]
+
+                res_val = gate['func'](*vals)
+                # Format label: (A AND B)
+                res_label = f"({labels[0]} {token} {labels[1]})" if gate['arity'] == 2 else f"({token} {labels[0]})"
+
+                stack.append({'val': res_val, 'label': res_label})
+                history[res_label] = res_val
+            else:
+                stack.append({'val': var_map[token], 'label': token})
+        return stack[0]['val'], history
+
     def generate_table(self, expression_str):
         # 1. Prepare the engine
         tokens = self.tokenize(expression_str)
@@ -142,13 +166,81 @@ class LogicEngine:
             row_str = " | ".join(row_values)
             print(f"{row_str} | {int(result)}")
 
+    def export_table(self, expr_str, filename, file_format='markdown'):
+        # 1. Logic Processing (same as before)
+        tokens = self.tokenize(expr_str)
+        postfix = self.shunting_yard(tokens)
+        sorted_vars = sorted(list(self.variables))
+
+        dummy_map = {v: True for v in sorted_vars}
+        _, history = self.evaluate_with_history(postfix, dummy_map)
+        all_cols = sorted_vars + list(history.keys())
+
+        # 2. Prepare Data Rows
+        rows = []
+        for combo in product([True, False], repeat=len(sorted_vars)):
+            v_map = dict(zip(sorted_vars, combo))
+            _, hist = self.evaluate_with_history(postfix, v_map)
+            row = [int(v_map[v]) for v in sorted_vars] + [int(hist[c])
+                                                          for c in all_cols[len(sorted_vars):]]
+            rows.append(row)
+
+        # 3. Handle File Directory
+        # This ensures the files go into an 'outputs' folder in your project directory
+        output_dir = "logic_outputs"
+        if not path.exists(output_dir):
+            makedirs(output_dir)
+
+        # Combine folder path with filename
+        file_path = path.join(output_dir, filename)
+
+        # 4. Write based on format
+        if file_format.lower() == 'csv':
+            self._write_csv(file_path, all_cols, rows)
+        elif file_format.lower() == 'markdown':
+            self._write_markdown(file_path, all_cols, rows)
+
+        print(f"File saved to: {path.abspath(file_path)}")
+
+    def _write_csv(self, path, headers, rows):
+        with open(path, 'w', newline='', encoding='utf-8') as f:
+            the_writer = writer(f)
+            the_writer.writerow(headers)
+            the_writer.writerows(rows)
+
+    def _write_markdown(self, path, headers, rows):
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(f"# Truth Table for: {headers[-1]}\n\n")  # Title
+            f.write("| " + " | ".join(headers) + " |\n")
+            f.write("| " + " | ".join(["---"] * len(headers)) + " |\n")
+            for row in rows:
+                f.write("| " + " | ".join(map(str, row)) + " |\n")
+
+
+# --- Final Run ---
+engine = LogicEngine()
+expression = "(A & B) -> C"
+
+# This will create a folder 'logic_outputs' and put both files inside it
+engine.export_table(expression, "results.md", "markdown")
+engine.export_table(expression, "results.csv", "csv")
+
+# # --- Final Execution ---
+# engine = LogicEngine()
+# expr = "(A & B) -> (C <-> A)"
+
+# # Save as a Markdown file
+# engine.export_table(expr, "logic_table.md", file_format='markdown')
+
+# # Save as a CSV file for Excel
+# engine.export_table(expr, "logic_table.csv", file_format='csv')
 
 # --- Testing the Class ---
 # Setup
-engine = LogicEngine()
-# expression = "(A AND B) OR NOT C"
-expression = "(A & B) -> (C <-> A)"
-engine.generate_table(expression)
+# engine = LogicEngine()
+# # expression = "(A AND B) OR NOT C"
+# expression = "(A & B) -> (C <-> A)"
+# engine.generate_table(expression)
 
 # tokens = engine.tokenize(expression)
 # postfix = engine.shunting_yard(tokens)
